@@ -8,5 +8,9 @@ namespace OlimpusSN.Controllers
         {
             return View();
         }
+        public IActionResult ProfilePage()
+        {
+            return View();
+        }
     }
 }
