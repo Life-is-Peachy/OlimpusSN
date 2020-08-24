@@ -35,11 +35,9 @@
     @await Component.InvokeAsync("SideBarLeftComponent");
     @await Component.InvokeAsync("SideBarRightComponent");
     @await Component.InvokeAsync("TopHeaderComponent");
-    <div class="container">
-        <main role="main" class="pb-3">
+
             @RenderBody()
-        </main>
-    </div>
+
 
 
     <!-- JS Scripts -->
