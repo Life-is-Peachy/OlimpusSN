@@ -1,7 +1,11 @@
 ﻿namespace OlimpusSN.Models
 {
-    public class UserPersonalInfo
+    public class CommonInfo
     {
+        public long Id { get; set; }
+
+        public long UserInfoSumId { get; set; }
+
         public string WebSite { get; set; }
 
         public string PhoneNumber { get; set; }

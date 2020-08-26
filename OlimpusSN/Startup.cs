@@ -24,6 +24,10 @@ namespace OlimpusSN
 
             services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(
                 Configuration["Data:ConnectionStrings:Identity"]));
+            services.AddDbContext<UserDbContext>(options => options.UseSqlServer(
+                Configuration["Data:ConnectionStrings:User"]));
+
+            services.AddTransient<ICommonInfoRepository, CommonInfoRepository>();
 
             
 
@@ -49,7 +53,7 @@ namespace OlimpusSN
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Profile}/{action=AccountPersonalInformation}/{id?}");
+                    pattern: "{controller=Profile}/{action=PersonalInformation}/{id?}");
             });
         }
     }

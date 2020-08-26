@@ -1,6 +1,6 @@
 ﻿namespace OlimpusSN.Models
 {
-    public class UserInformation
+    public class PersonSummary
     {
         public long Id { get; set; }
 
