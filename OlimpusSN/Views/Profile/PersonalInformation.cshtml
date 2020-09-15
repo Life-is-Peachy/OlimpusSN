@@ -1,6 +1,5 @@
-﻿@model CommonInfo
+﻿@model InfoCommon
 <!-- Main Header Account -->
-
     <div class="main-header">
         <div class="content-bg-wrap bg-account"></div>
         <div class="container">
@@ -32,7 +31,7 @@
                     </div>
                     <div class="ui-block-content">
 
-                        <form asp-action="SaveInformation" method="post">
+                        <form asp-action="SaveCommonInfo" method="post">
                             <!-- Personal Information Form  -->
                                 <div class="row">
 
@@ -173,13 +172,10 @@
                                         <button class="btn btn-secondary btn-lg full-width">Restore all Attributes</button>
                                     </div>
                                     <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
+                                        <input type="hidden" value="@ViewBag.UserId" />
                                         <button type="submit" class="btn btn-primary btn-lg full-width">Save all Changes</button>
                                     </div>
-
                                 </div>
-                            }
-
-
                         </form>
 
                         <!-- ... end Personal Information Form  -->

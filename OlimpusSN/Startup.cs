@@ -27,7 +27,7 @@ namespace OlimpusSN
             services.AddDbContext<UserDbContext>(options => options.UseSqlServer(
                 Configuration["Data:ConnectionStrings:User"]));
 
-            services.AddTransient<ICommonInfoRepository, CommonInfoRepository>();
+            services.AddTransient<IPersonSummary, PersonSummaryRepository>();
 
             
 

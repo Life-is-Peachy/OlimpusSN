@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OlimpusSN.Models;
 
 namespace OlimpusSN.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    partial class OlympusIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200826170537_Another2")]
+    partial class Another2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -353,7 +355,10 @@ namespace OlimpusSN.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("InfoCommonId")
+                    b.Property<long?>("InfoCommonId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("InfoComonId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("InfoEducationId")
@@ -442,9 +447,7 @@ namespace OlimpusSN.Migrations
                 {
                     b.HasOne("OlimpusSN.Models.InfoCommon", "InfoCommon")
                         .WithMany()
-                        .HasForeignKey("InfoCommonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InfoCommonId");
 
                     b.HasOne("OlimpusSN.Models.InfoEducation", "InfoEducation")
                         .WithMany()
