@@ -10,8 +10,8 @@ using OlimpusSN.Models;
 namespace OlimpusSN.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20200826125939_Another")]
-    partial class Another
+    [Migration("20200916110406_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -197,7 +197,7 @@ namespace OlimpusSN.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("PersonSummaryId")
+                    b.Property<long?>("PersonAllId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("PhoneNumber")
@@ -226,7 +226,158 @@ namespace OlimpusSN.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
+                    b.HasIndex("PersonAllId");
+
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("OlimpusSN.Models.PersonAll", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long?>("PersonCommonId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("PersonEducationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("PersonEmployementId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("PersonHobbiesId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonCommonId");
+
+                    b.HasIndex("PersonEducationId");
+
+                    b.HasIndex("PersonEmployementId");
+
+                    b.HasIndex("PersonHobbiesId");
+
+                    b.ToTable("PersonAll");
+                });
+
+            modelBuilder.Entity("OlimpusSN.Models.PersonCommon", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AboutMe")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Birthplace")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Country")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Married")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Occupation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Political")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Religious")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WebSite")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PersonCommon");
+                });
+
+            modelBuilder.Entity("OlimpusSN.Models.PersonEducation", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PeriodOfEducation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WhereEducated")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PersonEducation");
+                });
+
+            modelBuilder.Entity("OlimpusSN.Models.PersonEmployement", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PeriodOfEmployement")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WhereEmployemented")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PersonEmployement");
+                });
+
+            modelBuilder.Entity("OlimpusSN.Models.PersonHobbies", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FavBooks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FavGames")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FavMovies")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FavMusic")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FavTV")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FavWriters")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Hobbies")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OtherInterests")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PersonHobbies");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -278,6 +429,32 @@ namespace OlimpusSN.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("OlimpusSN.Models.AppUser", b =>
+                {
+                    b.HasOne("OlimpusSN.Models.PersonAll", "PersonAll")
+                        .WithMany()
+                        .HasForeignKey("PersonAllId");
+                });
+
+            modelBuilder.Entity("OlimpusSN.Models.PersonAll", b =>
+                {
+                    b.HasOne("OlimpusSN.Models.PersonCommon", "PersonCommon")
+                        .WithMany()
+                        .HasForeignKey("PersonCommonId");
+
+                    b.HasOne("OlimpusSN.Models.PersonEducation", "PersonEducation")
+                        .WithMany()
+                        .HasForeignKey("PersonEducationId");
+
+                    b.HasOne("OlimpusSN.Models.PersonEmployement", "PersonEmployement")
+                        .WithMany()
+                        .HasForeignKey("PersonEmployementId");
+
+                    b.HasOne("OlimpusSN.Models.PersonHobbies", "PersonHobbies")
+                        .WithMany()
+                        .HasForeignKey("PersonHobbiesId");
                 });
 #pragma warning restore 612, 618
         }

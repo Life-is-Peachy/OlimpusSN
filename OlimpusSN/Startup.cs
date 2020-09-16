@@ -27,7 +27,7 @@ namespace OlimpusSN
             services.AddDbContext<UserDbContext>(options => options.UseSqlServer(
                 Configuration["Data:ConnectionStrings:User"]));
 
-            services.AddTransient<IPersonSummary, PersonSummaryRepository>();
+            services.AddTransient<IPersonRepository, PersonRepository>();
 
             
 
@@ -40,7 +40,7 @@ namespace OlimpusSN
         }
 
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppIdentityDbContext ctx)
         {
             app.UseDeveloperExceptionPage();
             app.UseHttpsRedirection();
@@ -55,6 +55,7 @@ namespace OlimpusSN
                     name: "default",
                     pattern: "{controller=Profile}/{action=PersonalInformation}/{id?}");
             });
+            SeedData.Seed(ctx);
         }
     }
 }

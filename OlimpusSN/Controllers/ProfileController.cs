@@ -10,10 +10,10 @@ namespace OlimpusSN.Controllers
     [Authorize]
     public class ProfileController : Controller
     {
-        private IPersonSummary _repository;
+        private IPersonRepository _repository;
         private SignInManager<AppUser> signInManager;
 
-        public ProfileController(SignInManager<AppUser> sgnMgr, IPersonSummary repo)
+        public ProfileController(SignInManager<AppUser> sgnMgr, IPersonRepository repo)
         {
             signInManager = sgnMgr;
             _repository = repo;
@@ -27,13 +27,16 @@ namespace OlimpusSN.Controllers
 
         public IActionResult PersonalInformation()
         {
-            return View(_repository.PersonSummaryRecords.First());
+            string userId = signInManager.UserManager.GetUserId(User);
+            return View(_repository.GetUser(userId));
         }
 
-        public IActionResult SaveCommonInfo(InfoCommon info)
+
+        [HttpPost]
+        public IActionResult SavePersonInfo(AppUser person)
         {
-            _repository.SaveCommonInfo(info);
-            return RedirectToAction(nameof(PersonalInformation));
+            _repository.SavePersonInfo(person);
+            return View(nameof(ProfileAbout));
         }
 
 

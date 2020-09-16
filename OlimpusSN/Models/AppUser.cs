@@ -10,5 +10,9 @@ namespace OlimpusSN.Models
         public DateTime Birthday { get; set; }
 
         public Genders Gender { get; set; }
+
+        public PersonAll PersonAll { get; set; }
+
+
     }
 }

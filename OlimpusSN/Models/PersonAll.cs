@@ -1,24 +1,19 @@
 ﻿namespace OlimpusSN.Models
 {
-    public class PersonSummary
+    public class PersonAll
     {
         public long Id { get; set; }
 
+        public PersonCommon PersonCommon { get; set; }
 
-        public long InfoCommonId { get; set; }
-        public InfoCommon InfoCommon { get; set; }
+        public PersonHobbies PersonHobbies { get; set; }
 
-        public long InfoHobbiesId { get; set; }
-        public InfoHobbies InfoHobbies { get; set; }
+        public PersonEducation PersonEducation { get; set; }
 
-        public long InfoEducationId { get; set; }
-        public InfoEducation InfoEducation { get; set; }
-
-        public long InfoEmployementId { get; set; }
-        public InfoEmployement InfoEmployement { get; set; }
+        public PersonEmployement PersonEmployement { get; set; }
     }
 
-    public class InfoCommon
+    public class PersonCommon
     {
         public long Id { get; set; }
 
@@ -41,7 +36,7 @@
         public string Religious { get; set; }
     }
 
-    public class InfoHobbies
+    public class PersonHobbies
     {
         public long Id { get; set; }
 
@@ -62,7 +57,7 @@
         public string OtherInterests { get; set; }
     }
 
-    public class InfoEducation
+    public class PersonEducation
     {
         public long Id { get; set; }
 
@@ -73,7 +68,7 @@
         public string Description { get; set; }
     }
 
-    public class InfoEmployement
+    public class PersonEmployement
     {
         public long Id { get; set; }
 

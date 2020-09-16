@@ -18,7 +18,7 @@ namespace OlimpusSN.Controllers
         public IActionResult Register() => View();
 
 
-
+        //TODO Во вьюшке с персональной информацией сдлеать название лейблов через атрибуты класса.
         //TODO Не оставляет сессию после регистрации
         [HttpPost]
         public async Task<IActionResult> Register(RegisterModel model)

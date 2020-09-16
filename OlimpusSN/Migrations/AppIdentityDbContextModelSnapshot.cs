@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OlimpusSN.Models;
 
 namespace OlimpusSN.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20200831063712_AnotherOne")]
-    partial class AnotherOne
+    partial class AppIdentityDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -197,7 +195,7 @@ namespace OlimpusSN.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("PersonSummaryId")
+                    b.Property<long?>("PersonAllId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("PhoneNumber")
@@ -226,12 +224,44 @@ namespace OlimpusSN.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("PersonSummaryId");
+                    b.HasIndex("PersonAllId");
 
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("OlimpusSN.Models.InfoCommon", b =>
+            modelBuilder.Entity("OlimpusSN.Models.PersonAll", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long?>("PersonCommonId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("PersonEducationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("PersonEmployementId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("PersonHobbiesId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonCommonId");
+
+                    b.HasIndex("PersonEducationId");
+
+                    b.HasIndex("PersonEmployementId");
+
+                    b.HasIndex("PersonHobbiesId");
+
+                    b.ToTable("PersonAll");
+                });
+
+            modelBuilder.Entity("OlimpusSN.Models.PersonCommon", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -267,10 +297,10 @@ namespace OlimpusSN.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("InfoCommon");
+                    b.ToTable("PersonCommon");
                 });
 
-            modelBuilder.Entity("OlimpusSN.Models.InfoEducation", b =>
+            modelBuilder.Entity("OlimpusSN.Models.PersonEducation", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -288,10 +318,10 @@ namespace OlimpusSN.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("InfoEducation");
+                    b.ToTable("PersonEducation");
                 });
 
-            modelBuilder.Entity("OlimpusSN.Models.InfoEmployement", b =>
+            modelBuilder.Entity("OlimpusSN.Models.PersonEmployement", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -309,10 +339,10 @@ namespace OlimpusSN.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("InfoEmployement");
+                    b.ToTable("PersonEmployement");
                 });
 
-            modelBuilder.Entity("OlimpusSN.Models.InfoHobbies", b =>
+            modelBuilder.Entity("OlimpusSN.Models.PersonHobbies", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -345,39 +375,7 @@ namespace OlimpusSN.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("InfoHobbies");
-                });
-
-            modelBuilder.Entity("OlimpusSN.Models.PersonSummary", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long>("InfoCommonId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("InfoEducationId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("InfoEmployementId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("InfoHobbiesId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InfoCommonId");
-
-                    b.HasIndex("InfoEducationId");
-
-                    b.HasIndex("InfoEmployementId");
-
-                    b.HasIndex("InfoHobbiesId");
-
-                    b.ToTable("PersonSummary");
+                    b.ToTable("PersonHobbies");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -433,38 +431,28 @@ namespace OlimpusSN.Migrations
 
             modelBuilder.Entity("OlimpusSN.Models.AppUser", b =>
                 {
-                    b.HasOne("OlimpusSN.Models.PersonSummary", "PersonSummary")
+                    b.HasOne("OlimpusSN.Models.PersonAll", "PersonAll")
                         .WithMany()
-                        .HasForeignKey("PersonSummaryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PersonAllId");
                 });
 
-            modelBuilder.Entity("OlimpusSN.Models.PersonSummary", b =>
+            modelBuilder.Entity("OlimpusSN.Models.PersonAll", b =>
                 {
-                    b.HasOne("OlimpusSN.Models.InfoCommon", "InfoCommon")
+                    b.HasOne("OlimpusSN.Models.PersonCommon", "PersonCommon")
                         .WithMany()
-                        .HasForeignKey("InfoCommonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PersonCommonId");
 
-                    b.HasOne("OlimpusSN.Models.InfoEducation", "InfoEducation")
+                    b.HasOne("OlimpusSN.Models.PersonEducation", "PersonEducation")
                         .WithMany()
-                        .HasForeignKey("InfoEducationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PersonEducationId");
 
-                    b.HasOne("OlimpusSN.Models.InfoEmployement", "InfoEmployement")
+                    b.HasOne("OlimpusSN.Models.PersonEmployement", "PersonEmployement")
                         .WithMany()
-                        .HasForeignKey("InfoEmployementId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PersonEmployementId");
 
-                    b.HasOne("OlimpusSN.Models.InfoHobbies", "InfoHobbies")
+                    b.HasOne("OlimpusSN.Models.PersonHobbies", "PersonHobbies")
                         .WithMany()
-                        .HasForeignKey("InfoHobbiesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PersonHobbiesId");
                 });
 #pragma warning restore 612, 618
         }

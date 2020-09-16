@@ -7,5 +7,8 @@ namespace OlimpusSN.Models
     {
         public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options)
             : base(options) { }
+
+        public DbSet<AppUser> User { get; set; }
+
     }
 }
