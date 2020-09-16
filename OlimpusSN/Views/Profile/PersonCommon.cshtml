@@ -1,4 +1,4 @@
-﻿@model AppUser
+﻿@model PersonCommon
 <!-- Main Header Account -->
     <div class="main-header">
         <div class="content-bg-wrap bg-account"></div>
@@ -31,7 +31,7 @@
                     </div>
                     <div class="ui-block-content">
 
-                        <form asp-action="SavePersonInfo" method="post">
+                        <form asp-action="CommonSave" method="post">
                             <!-- Personal Information Form  -->
                             <input asp-for="@Model.Id" type="hidden" />
                                 <div class="row">
@@ -39,17 +39,17 @@
                                     <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
                                         <div class="form-group label-floating">
                                             <label class="control-label">First Name</label>
-                                            <input asp-for="@Model.UserName" disabled class="form-control" type="text">
+                                            <input disabled class="form-control" type="text" value="@ViewBag.FirstName">
                                         </div>
 
                                         <div class="form-group label-floating">
                                             <label class="control-label">Email</label>
-                                            <input asp-for="@Model.Email" disabled class="form-control" type="email"/>
+                                            <input disabled class="form-control" type="email" value="@ViewBag.Email"/>
                                         </div>
 
                                         <div class="form-group date-time-picker label-floating">
                                             <label class="control-label">Your Birthday</label>
-                                            <input asp-for="@Model.Birthday" disabled name="datetimepicker" />
+                                            <input disabled name="datetimepicker" value="@ViewBag.Birthday" />
                                             <span class="input-group-addon">
                                                 <svg class="olymp-month-calendar-icon icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-month-calendar-icon"></use></svg>
                                             </span>
@@ -59,25 +59,25 @@
                                     <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
                                         <div class="form-group label-floating">
                                             <label class="control-label">Last Name</label>
-                                            <input asp-for="LastName" disabled class="form-control" type="text"/>
+                                            <input disabled class="form-control" type="text" value="@ViewBag.LastName"/>
                                         </div>
 
                                         <div class="form-group label-floating">
                                             <label class="control-label">Website</label>
-                                            <input asp-for="@Model.PersonAll.PersonCommon.WebSite" class="form-control"/>
+                                            <input asp-for="@Model.WebSite" class="form-control"/>
                                         </div>
 
 
                                         <div class="form-group label-floating">
                                             <label class="control-label">Phone number</label>
-                                            <input asp-for="@Model.PersonAll.PersonCommon.PhoneNumber" class="form-control" type="text"/>
+                                            <input asp-for="@Model.PhoneNumber" class="form-control" type="text"/>
                                         </div>
                                     </div>
 
                                     <div class="col col-lg-4 col-md-4 col-sm-12 col-12">
                                         <div class="form-group label-floating is-select">
                                             <label class="control-label">Your Country</label>
-                                            <select asp-for="@Model.PersonAll.PersonCommon.Country" class="selectpicker form-control"
+                                            <select asp-for="@Model.Country" class="selectpicker form-control"
                                                     asp-items="@new SelectList(Enum.GetNames(typeof(Countries)))">
                                             </select>
                                         </div>
@@ -103,43 +103,42 @@
                                     <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
                                         <div class="form-group label-floating">
                                             <label class="control-label">Write a little description about you</label>
-                                            <textarea asp-for="@Model.PersonAll.PersonCommon.AboutMe" class="form-control"></textarea>
+                                            <textarea asp-for="@Model.AboutMe" class="form-control"></textarea>
                                         </div>
 
                                         <div class="form-group label-floating is-select">
                                             <label class="control-label">Your Gender</label>
-                                            <select disabled class="selectpicker form-control">
-                                                <option value="MA">Male</option>
-                                                <option value="FE">Female</option>
+                                            <select disabled class="selectpicker form-control"
+                                                asp-items="@new SelectList(Enum.GetNames(typeof(Genders)))">
                                             </select>
                                         </div>
 
                                         <div class="form-group label-floating">
                                             <label class="control-label">Religious Belifs</label>
-                                            <input asp-for="@Model.PersonAll.PersonCommon.Religious" class="form-control" type="text"/>
+                                            <input asp-for="@Model.Religious" class="form-control" type="text"/>
                                         </div>
                                     </div>
                                     <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
                                         <div class="form-group label-floating">
                                             <label class="control-label">Your Birthplace</label>
-                                            <input asp-for="@Model.PersonAll.PersonCommon.Birthplace" class="form-control" type="text"/>
+                                            <input asp-for="@Model.Birthplace" class="form-control" type="text"/>
                                         </div>
 
                                         <div class="form-group label-floating">
                                             <label class="control-label">Your Occupation</label>
-                                            <input asp-for="@Model.PersonAll.PersonCommon.Occupation" class="form-control" type="text"/>
+                                            <input asp-for="@Model.Occupation" class="form-control" type="text"/>
                                         </div>
 
                                         <div class="form-group label-floating is-select">
                                             <label class="control-label">Status</label>
-                                            <select asp-for="@Model.PersonAll.PersonCommon.Married" class="selectpicker form-control"
+                                            <select asp-for="@Model.Married" class="selectpicker form-control"
                                                     asp-items="@new SelectList(Enum.GetNames(typeof(Married)))">
                                             </select>
                                         </div>
 
                                         <div class="form-group label-floating">
                                             <label class="control-label">Political Incline</label>
-                                            <input asp-for="@Model.PersonAll.PersonCommon.Political" class="form-control" type="text"/>
+                                            <input asp-for="@Model.Political" class="form-control" type="text"/>
                                         </div>
                                     </div>
                                     <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">

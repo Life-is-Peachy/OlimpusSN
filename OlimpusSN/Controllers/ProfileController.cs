@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OlimpusSN.Models;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace OlimpusSN.Controllers
@@ -11,12 +10,17 @@ namespace OlimpusSN.Controllers
     public class ProfileController : Controller
     {
         private IPersonRepository _repository;
+        private IPersonCommonRepository _crepository;
+        private IPersonHobbiesRepository _hrepository;
         private SignInManager<AppUser> signInManager;
 
-        public ProfileController(SignInManager<AppUser> sgnMgr, IPersonRepository repo)
+        public ProfileController(SignInManager<AppUser> sgnMgr, IPersonRepository repo,
+            IPersonCommonRepository crepo, IPersonHobbiesRepository hrepo)
         {
             signInManager = sgnMgr;
             _repository = repo;
+            _crepository = crepo;
+            _hrepository = hrepo;
         }
 
         public IActionResult ProfileAbout() => View();
@@ -25,18 +29,39 @@ namespace OlimpusSN.Controllers
 
         public IActionResult Newsfeed() => View();
 
-        public IActionResult PersonalInformation()
+        public IActionResult PersonCommon()
         {
             string userId = signInManager.UserManager.GetUserId(User);
-            return View(_repository.GetUser(userId));
+            ViewBag.FirstName = _repository.GetUser(userId).UserName;
+            ViewBag.LastName = _repository.GetUser(userId).LastName;
+            ViewBag.Email = _repository.GetUser(userId).Email;
+            ViewBag.Birthday = _repository.GetUser(userId).Birthday;
+            ViewBag.Gender = _repository.GetUser(userId).Gender;
+            return View(_crepository.GetPerson(userId));
+        }
+
+        public IActionResult PersonHobbies()
+        {
+            string userId = signInManager.UserManager.GetUserId(User);
+            return View(_hrepository.GetPerson(userId));
+        }
+
+        
+
+
+        [HttpPost]
+        public IActionResult CommonSave(PersonCommon common)
+        {
+            _crepository.Update(common);
+            return View(nameof(PersonCommon));
         }
 
 
         [HttpPost]
-        public IActionResult SavePersonInfo(AppUser person)
+        public IActionResult HobbiesSave(PersonHobbies interests)
         {
-            _repository.SavePersonInfo(person);
-            return View(nameof(ProfileAbout));
+            _hrepository.Update(interests);
+            return View(nameof(PersonHobbies));
         }
 
 

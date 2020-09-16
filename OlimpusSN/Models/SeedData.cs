@@ -8,8 +8,8 @@ namespace OlimpusSN.Models
     {
         public static void Seed(DbContext context)
         {
-            if (context is AppIdentityDbContext users && users.User.Count() == 0)
-                users.User.Add(User);
+            if (context is AppIdentityDbContext users && users.UserAll.Count() == 0)
+                users.UserAll.Add(User);
 
             context.SaveChanges();
         }

@@ -25,7 +25,7 @@ namespace OlimpusSN.Models
 
         public AppUser GetUser(string id)
         {
-            return _context.User.Include(i => i.PersonAll)
+            return _context.UserAll.Include(i => i.PersonAll)
                 .ThenInclude(e => e.PersonCommon).First(p => p.Id == id);
         }
 
@@ -33,7 +33,7 @@ namespace OlimpusSN.Models
         public void SavePersonInfo(AppUser person)
         {
             var s = this.GetUser(person.Id);
-            _context.User.Update(s);
+            _context.UserAll.Update(s);
             _context.SaveChanges();
         }
     }

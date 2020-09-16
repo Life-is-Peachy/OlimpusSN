@@ -28,8 +28,10 @@ namespace OlimpusSN
                 Configuration["Data:ConnectionStrings:User"]));
 
             services.AddTransient<IPersonRepository, PersonRepository>();
+            services.AddTransient<IPersonCommonRepository, PersonCommonRepository>();
+            services.AddTransient<IPersonHobbiesRepository, PersonHobbiesRepository>();
 
-            
+
 
             services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppIdentityDbContext>();
@@ -53,7 +55,7 @@ namespace OlimpusSN
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Profile}/{action=PersonalInformation}/{id?}");
+                    pattern: "{controller=Profile}/{action=PersonCommon}/{id?}");
             });
             SeedData.Seed(ctx);
         }
