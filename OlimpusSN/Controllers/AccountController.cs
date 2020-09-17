@@ -10,16 +10,20 @@ namespace OlimpusSN.Controllers
         private UserManager<AppUser> userManager;
         private SignInManager<AppUser> signInManager;
 
+
         public AccountController(UserManager<AppUser> usrMgr, SignInManager<AppUser> sgnMgr)
         {
             userManager = usrMgr;
             signInManager = sgnMgr;
         }
-        public IActionResult Register() => View();
 
 
-        //TODO Во вьюшке с персональной информацией сдлеать название лейблов через атрибуты класса.
-        //TODO Не оставляет сессию после регистрации
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> Register(RegisterModel model)
         {
@@ -31,18 +35,19 @@ namespace OlimpusSN.Controllers
                     LastName = model.LastName,
                     Email = model.Email,
                     Birthday = model.Birthday,
-                    Gender = model.Gender
+                    Gender = model.Gender,
+                    PersonAll = SeedData.SeedOnRegister()
                 };
-
                 IdentityResult result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
-                    return Redirect("/");
+                    return RedirectToAction("PersonHobbies", "Profile");
                 else
                     foreach (IdentityError error in result.Errors)
                         ModelState.AddModelError("", error.Description);
             }
             return View(model);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> SignIn(SignInModel details, string returnUrl)

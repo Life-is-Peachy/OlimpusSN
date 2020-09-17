@@ -236,13 +236,10 @@ namespace OlimpusSN.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<long?>("PersonCareerId")
+                        .HasColumnType("bigint");
+
                     b.Property<long?>("PersonCommonId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("PersonEducationId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("PersonEmployementId")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("PersonHobbiesId")
@@ -250,15 +247,35 @@ namespace OlimpusSN.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PersonCareerId");
+
                     b.HasIndex("PersonCommonId");
+
+                    b.HasIndex("PersonHobbiesId");
+
+                    b.ToTable("PersonAll");
+                });
+
+            modelBuilder.Entity("OlimpusSN.Models.PersonCareer", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long?>("PersonEducationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("PersonEmployementId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("PersonEducationId");
 
                     b.HasIndex("PersonEmployementId");
 
-                    b.HasIndex("PersonHobbiesId");
-
-                    b.ToTable("PersonAll");
+                    b.ToTable("PersonCareer");
                 });
 
             modelBuilder.Entity("OlimpusSN.Models.PersonCommon", b =>
@@ -438,10 +455,21 @@ namespace OlimpusSN.Migrations
 
             modelBuilder.Entity("OlimpusSN.Models.PersonAll", b =>
                 {
+                    b.HasOne("OlimpusSN.Models.PersonCareer", "PersonCareer")
+                        .WithMany()
+                        .HasForeignKey("PersonCareerId");
+
                     b.HasOne("OlimpusSN.Models.PersonCommon", "PersonCommon")
                         .WithMany()
                         .HasForeignKey("PersonCommonId");
 
+                    b.HasOne("OlimpusSN.Models.PersonHobbies", "PersonHobbies")
+                        .WithMany()
+                        .HasForeignKey("PersonHobbiesId");
+                });
+
+            modelBuilder.Entity("OlimpusSN.Models.PersonCareer", b =>
+                {
                     b.HasOne("OlimpusSN.Models.PersonEducation", "PersonEducation")
                         .WithMany()
                         .HasForeignKey("PersonEducationId");
@@ -449,10 +477,6 @@ namespace OlimpusSN.Migrations
                     b.HasOne("OlimpusSN.Models.PersonEmployement", "PersonEmployement")
                         .WithMany()
                         .HasForeignKey("PersonEmployementId");
-
-                    b.HasOne("OlimpusSN.Models.PersonHobbies", "PersonHobbies")
-                        .WithMany()
-                        .HasForeignKey("PersonHobbiesId");
                 });
 #pragma warning restore 612, 618
         }

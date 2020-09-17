@@ -8,9 +8,7 @@
 
         public PersonHobbies PersonHobbies { get; set; }
 
-        public PersonEducation PersonEducation { get; set; }
-
-        public PersonEmployement PersonEmployement { get; set; }
+        public PersonCareer PersonCareer { get; set; }
     }
 
     public class PersonCommon
@@ -77,5 +75,14 @@
         public string PeriodOfEmployement { get; set; }
 
         public string Description { get; set; }
+    }
+
+    public class PersonCareer
+    {
+        public long Id { get; set; }
+
+        public PersonEducation PersonEducation { get; set; }
+
+        public PersonEmployement PersonEmployement { get; set; }
     }
 }

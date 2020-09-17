@@ -12,7 +12,5 @@ namespace OlimpusSN.Models
         public Genders Gender { get; set; }
 
         public PersonAll PersonAll { get; set; }
-
-
     }
 }

@@ -5,38 +5,33 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using OlimpusSN.Models;
-using Microsoft.AspNetCore.Http;
 
 namespace OlimpusSN
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        public Startup(IConfiguration configuration) => Configuration = configuration;
 
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
-                       
-
             services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(
                 Configuration["Data:ConnectionStrings:Identity"]));
-            services.AddDbContext<UserDbContext>(options => options.UseSqlServer(
-                Configuration["Data:ConnectionStrings:User"]));
+
 
             services.AddTransient<IPersonRepository, PersonRepository>();
             services.AddTransient<IPersonCommonRepository, PersonCommonRepository>();
             services.AddTransient<IPersonHobbiesRepository, PersonHobbiesRepository>();
-
+            services.AddTransient<IPersonCareerRepository, PersonCareerRepository>();
 
 
             services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppIdentityDbContext>();
 
+
             services.ConfigureApplicationCookie(opts => { opts.LoginPath = "/Account/Register"; });
+
 
             services.AddControllersWithViews();
         }
@@ -55,9 +50,9 @@ namespace OlimpusSN
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Profile}/{action=PersonCommon}/{id?}");
+                    pattern: "{controller=Profile}/{action=ProfileAbout}/{id?}");
             });
-            SeedData.Seed(ctx);
+            //SeedData.Seed(ctx);
         }
     }
 }

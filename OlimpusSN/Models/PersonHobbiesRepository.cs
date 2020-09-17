@@ -10,14 +10,14 @@ namespace OlimpusSN.Models
         PersonHobbies GetPerson(string id);
     }
 
+
     public class PersonHobbiesRepository : IPersonHobbiesRepository
     {
+
         private AppIdentityDbContext _context;
 
-        public PersonHobbiesRepository(AppIdentityDbContext ctx)
-        {
-            _context = ctx;
-        }
+
+        public PersonHobbiesRepository(AppIdentityDbContext ctx) => _context = ctx;
 
 
         public void Update(PersonHobbies hobbies)
@@ -29,10 +29,9 @@ namespace OlimpusSN.Models
 
         public PersonHobbies GetPerson(string id)
         {
-            var s = _context.UserAll.Include(i => i.PersonAll)
-                .ThenInclude(e => e.PersonHobbies).First(p => p.Id == id);
-            return s.PersonAll.PersonHobbies;
-
+            return _context.UserAll.Include(i => i.PersonAll)
+                .ThenInclude(e => e.PersonHobbies)
+                .First(p => p.Id == id).PersonAll.PersonHobbies;
         }
     }
 }

@@ -9,10 +9,15 @@ namespace OlimpusSN.Models
             : base(options) { }
 
         public DbSet<AppUser> UserAll { get; set; }
-        public DbSet<PersonCommon> PersonCommon { get; set; }
-        public DbSet<PersonHobbies> PersonHobbies { get; set; }
-        public DbSet<PersonEducation> PersonEducation { get; set; }
-        public DbSet<PersonEmployement> PersonEmployement { get; set; }
 
+        public DbSet<PersonCareer> PersonCareer { get; set; }
+
+        public DbSet<PersonCommon> PersonCommon { get; set; }
+
+        public DbSet<PersonHobbies> PersonHobbies { get; set; }
+
+        public DbSet<PersonEducation> PersonEducation { get; set; }
+
+        public DbSet<PersonEmployement> PersonEmployement { get; set; }
     }
 }

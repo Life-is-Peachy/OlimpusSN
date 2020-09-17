@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OlimpusSN.Migrations
 {
-    public partial class Initial : Migration
+    public partial class PersonCareer2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -114,6 +114,32 @@ namespace OlimpusSN.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PersonCareer",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PersonEducationId = table.Column<long>(nullable: true),
+                    PersonEmployementId = table.Column<long>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PersonCareer", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PersonCareer_PersonEducation_PersonEducationId",
+                        column: x => x.PersonEducationId,
+                        principalTable: "PersonEducation",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PersonCareer_PersonEmployement_PersonEmployementId",
+                        column: x => x.PersonEmployementId,
+                        principalTable: "PersonEmployement",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PersonAll",
                 columns: table => new
                 {
@@ -121,28 +147,21 @@ namespace OlimpusSN.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PersonCommonId = table.Column<long>(nullable: true),
                     PersonHobbiesId = table.Column<long>(nullable: true),
-                    PersonEducationId = table.Column<long>(nullable: true),
-                    PersonEmployementId = table.Column<long>(nullable: true)
+                    PersonCareerId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersonAll", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_PersonAll_PersonCareer_PersonCareerId",
+                        column: x => x.PersonCareerId,
+                        principalTable: "PersonCareer",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_PersonAll_PersonCommon_PersonCommonId",
                         column: x => x.PersonCommonId,
                         principalTable: "PersonCommon",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_PersonAll_PersonEducation_PersonEducationId",
-                        column: x => x.PersonEducationId,
-                        principalTable: "PersonEducation",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_PersonAll_PersonEmployement_PersonEmployementId",
-                        column: x => x.PersonEmployementId,
-                        principalTable: "PersonEmployement",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -318,24 +337,29 @@ namespace OlimpusSN.Migrations
                 column: "PersonAllId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PersonAll_PersonCareerId",
+                table: "PersonAll",
+                column: "PersonCareerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PersonAll_PersonCommonId",
                 table: "PersonAll",
                 column: "PersonCommonId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonAll_PersonEducationId",
-                table: "PersonAll",
-                column: "PersonEducationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PersonAll_PersonEmployementId",
-                table: "PersonAll",
-                column: "PersonEmployementId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_PersonAll_PersonHobbiesId",
                 table: "PersonAll",
                 column: "PersonHobbiesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersonCareer_PersonEducationId",
+                table: "PersonCareer",
+                column: "PersonEducationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersonCareer_PersonEmployementId",
+                table: "PersonCareer",
+                column: "PersonEmployementId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -365,16 +389,19 @@ namespace OlimpusSN.Migrations
                 name: "PersonAll");
 
             migrationBuilder.DropTable(
+                name: "PersonCareer");
+
+            migrationBuilder.DropTable(
                 name: "PersonCommon");
+
+            migrationBuilder.DropTable(
+                name: "PersonHobbies");
 
             migrationBuilder.DropTable(
                 name: "PersonEducation");
 
             migrationBuilder.DropTable(
                 name: "PersonEmployement");
-
-            migrationBuilder.DropTable(
-                name: "PersonHobbies");
         }
     }
 }

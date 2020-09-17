@@ -9,44 +9,83 @@ namespace OlimpusSN.Controllers
     [Authorize]
     public class ProfileController : Controller
     {
-        private IPersonRepository _repository;
-        private IPersonCommonRepository _crepository;
-        private IPersonHobbiesRepository _hrepository;
-        private SignInManager<AppUser> signInManager;
+        private readonly IPersonRepository _repository;
 
-        public ProfileController(SignInManager<AppUser> sgnMgr, IPersonRepository repo,
-            IPersonCommonRepository crepo, IPersonHobbiesRepository hrepo)
+        private readonly IPersonCommonRepository _crepository;
+
+        private readonly IPersonHobbiesRepository _hrepository;
+
+        private readonly IPersonCareerRepository _crrepository;
+
+        private readonly SignInManager<AppUser> signInManager;
+
+
+        public ProfileController(SignInManager<AppUser> sgnMgr, IPersonRepository repo, IPersonCommonRepository crepo, IPersonHobbiesRepository hrepo, IPersonCareerRepository crrepo)
         {
             signInManager = sgnMgr;
             _repository = repo;
             _crepository = crepo;
             _hrepository = hrepo;
+            _crrepository = crrepo;
         }
 
-        public IActionResult ProfileAbout() => View();
 
-        public IActionResult ProfilePage() => View();
+        public string UserId => signInManager.UserManager.GetUserId(User);
 
-        public IActionResult Newsfeed() => View();
 
-        public IActionResult PersonCommon()
+        public IActionResult ProfilePage()
         {
-            string userId = signInManager.UserManager.GetUserId(User);
-            ViewBag.FirstName = _repository.GetUser(userId).UserName;
-            ViewBag.LastName = _repository.GetUser(userId).LastName;
-            ViewBag.Email = _repository.GetUser(userId).Email;
-            ViewBag.Birthday = _repository.GetUser(userId).Birthday;
-            ViewBag.Gender = _repository.GetUser(userId).Gender;
-            return View(_crepository.GetPerson(userId));
+            return View();
         }
+
+        public IActionResult Newsfeed()
+        {
+            return View();
+        }
+
+
+        public IActionResult ProfileAbout()
+        {
+            return View(_repository.GetUser(UserId).PersonAll);
+        }
+
+
+        public IActionResult PersonCareer()
+        {
+            return View(_crrepository.GetPerson(UserId));
+        }
+
 
         public IActionResult PersonHobbies()
         {
-            string userId = signInManager.UserManager.GetUserId(User);
-            return View(_hrepository.GetPerson(userId));
+            return View(_hrepository.GetPerson(UserId));
         }
 
-        
+
+        public IActionResult PersonCommon()
+        {
+            ViewBag.FirstName = _repository.GetUser(UserId).UserName;
+            ViewBag.LastName = _repository.GetUser(UserId).LastName;
+            ViewBag.Email = _repository.GetUser(UserId).Email;
+            ViewBag.Birthday = _repository.GetUser(UserId).Birthday;
+            ViewBag.Gender = _repository.GetUser(UserId).Gender;
+            return View(_crepository.GetPerson(UserId));
+        }
+
+
+        public async Task<IActionResult> SignOut()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction(nameof(ProfilePage));
+        }
+
+
+        [HttpPost]
+        public RedirectResult CareerSave(PersonCareer career, string returnUrl)
+        {
+            _crrepository.Update(career);
+            return Redirect(returnUrl);
+        }
 
 
         [HttpPost]
@@ -62,13 +101,6 @@ namespace OlimpusSN.Controllers
         {
             _hrepository.Update(interests);
             return View(nameof(PersonHobbies));
-        }
-
-
-        public async Task<IActionResult> SignOut()
-        {
-            await signInManager.SignOutAsync();
-            return RedirectToAction(nameof(ProfilePage));
         }
     }
 }

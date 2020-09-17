@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace OlimpusSN.Models
 {
@@ -13,14 +10,14 @@ namespace OlimpusSN.Models
         PersonCommon GetPerson(string id);
     }
 
+
     public class PersonCommonRepository : IPersonCommonRepository
     {
+
         private AppIdentityDbContext _context;
 
-        public PersonCommonRepository(AppIdentityDbContext ctx)
-        {
-            _context = ctx;
-        }
+
+        public PersonCommonRepository(AppIdentityDbContext ctx) => _context = ctx;
 
 
         public void Update(PersonCommon person)
@@ -32,10 +29,9 @@ namespace OlimpusSN.Models
 
         public PersonCommon GetPerson(string id)
         {
-            var s = _context.UserAll.Include(i => i.PersonAll)
-                .ThenInclude(e => e.PersonCommon).First(p => p.Id == id);
-            return s.PersonAll.PersonCommon;
-
+            return _context.UserAll.Include(i => i.PersonAll)
+                .ThenInclude(e => e.PersonCommon)
+                .First(p => p.Id == id).PersonAll.PersonCommon;
         }
     }
 }
