@@ -1,4 +1,6 @@
-﻿<div class="header-spacer"></div>
+﻿@model AppUser
+
+<div class="header-spacer"></div>
 
     <div class="container">
         <div class="row">
@@ -43,13 +45,14 @@
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div class="tab-pane active" id="home-1" role="tabpanel" aria-expanded="true">
-                                <form>
+                                <form asp-action="Post" method="post">
+                                    <input asp-for="@Model.Id" type="hidden" />
                                     <div class="author-thumb">
                                         <img src="img/author-page.jpg" alt="author">
                                     </div>
                                     <div class="form-group with-icon label-floating is-empty">
                                         <label class="control-label">Share what you are thinking here...</label>
-                                        <textarea class="form-control" placeholder=""></textarea>
+                                        <textarea asp-for="@Model.PersonContent.FeedPost.Content"></textarea>
                                     </div>
                                     <div class="add-options-message">
                                         <a href="#" class="options-message" data-toggle="tooltip" data-placement="top" data-original-title="ADD PHOTOS">
@@ -63,7 +66,7 @@
                                             <svg class="olymp-small-pin-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-small-pin-icon"></use></svg>
                                         </a>
 
-                                        <button class="btn btn-primary btn-md-2">Post Status</button>
+                                        <button type="submit" class="btn btn-primary btn-md-2">Post Status</button>
                                         <button class="btn btn-md-2 btn-border-think btn-transparent c-grey">Preview</button>
 
                                     </div>

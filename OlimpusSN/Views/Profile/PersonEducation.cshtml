@@ -1,5 +1,5 @@
-﻿@model PersonCareer
-    <!-- Main Header Account -->
+﻿@model PersonEducation
+<!-- Main Header Account -->
 
 <div class="main-header">
     <div class="content-bg-wrap bg-account"></div>
@@ -32,33 +32,30 @@
                 </div>
                 <div class="ui-block-content">
 
-
                     <!-- Education History Form -->
 
-                    <form asp-action="CareerSave" asp-route-returnUrl="@Context.Request.Path" method="post">
+                    <form asp-action="EducationSave" asp-route-returnUrl="@Context.Request.Path" method="post">
                         <div class="row">
-
                             <input asp-for="@Model.Id" type="hidden" />
-                            <input asp-for="@Model.PersonEducation.Id" type="hidden" />
 
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Title or Place</label>
-                                    <input asp-for="@Model.PersonEducation.WhereEducated" class="form-control" type="text">
+                                    <input asp-for="@Model.WhereEducated" class="form-control" type="text">
                                 </div>
                             </div>
 
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Period of Time</label>
-                                    <input asp-for="@Model.PersonEducation.PeriodOfEducation" class="form-control" type="text">
+                                    <input asp-for="@Model.PeriodOfEducation" class="form-control" type="text">
                                 </div>
                             </div>
 
                             <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Description</label>
-                                    <textarea asp-for="@Model.PersonEducation.Description" class="form-control"></textarea>
+                                    <textarea asp-for="@Model.Description" class="form-control"></textarea>
                                 </div>
 
                                 <a href="#" class="add-field">
@@ -78,136 +75,83 @@
                     </form>
 
                     <!-- ... end Education History Form -->
-                </div>
-            </div>
-            <div class="ui-block">
-                <div class="ui-block-title">
-                    <h6 class="title">Your Employement History</h6>
-                </div>
-                <div class="ui-block-content">
 
-
-                    <!-- Employement History Form -->
-
-                    <form asp-action="CareerSave" method="post">
-                        <div class="row">
-
-                            <input asp-for="@Model.Id" type="hidden" />
-                            <input asp-for="@Model.PersonEmployement.Id" type="hidden" />
-
-                            <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Title or Place</label>
-                                    <input asp-for="@Model.PersonEmployement.WhereEmployemented" class="form-control" type="text">
-                                </div>
-                            </div>
-
-                            <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Period of Time</label>
-                                    <input asp-for="@Model.PersonEmployement.PeriodOfEmployement" class="form-control" type="text">
-                                </div>
-                            </div>
-
-                            <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Description</label>
-                                    <textarea asp-for="@Model.PersonEmployement.Description" class="form-control"></textarea>
-                                </div>
-
-                                <a href="#" class="add-field">
-                                    <svg class="olymp-plus-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-plus-icon"></use></svg>
-                                    <span>Add Education Field</span>
-                                </a>
-                            </div>
-
-                            <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
-                                <button class="btn btn-secondary btn-lg full-width">Cancel</button>
-                            </div>
-
-                            <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
-                                <button class="btn btn-primary btn-lg full-width">Save all Changes</button>
-                            </div>
-                        </div>
-                    </form>
-
-                    <!-- ... end Employement History Form -->
                 </div>
             </div>
         </div>
 
-        <div class="col col-xl-3 order-xl-1 col-lg-3 order-lg-1 col-md-12 order-md-2 col-sm-12  responsive-display-none">
-            <div class="ui-block">
+<div class="col col-xl-3 order-xl-1 col-lg-3 order-lg-1 col-md-12 order-md-2 col-sm-12  responsive-display-none">
+    <div class="ui-block">
 
+        <!-- Your Profile  -->
 
+        <div class="your-profile">
+            <div class="ui-block-title ui-block-title-small">
+                <h6 class="title">Your PROFILE</h6>
+            </div>
 
-                <!-- Your Profile  -->
-
-                <div class="your-profile">
-                    <div class="ui-block-title ui-block-title-small">
-                        <h6 class="title">Your PROFILE</h6>
+            <div id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingOne">
+                        <h6 class="mb-0">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Profile Settings
+                                <svg class="olymp-dropdown-arrow-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"></use></svg>
+                            </a>
+                        </h6>
                     </div>
 
-                    <div id="accordion" role="tablist" aria-multiselectable="true">
-                        <div class="card">
-                            <div class="card-header" role="tab" id="headingOne">
-                                <h6 class="mb-0">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        Profile Settings
-                                        <svg class="olymp-dropdown-arrow-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-dropdown-arrow-icon"></use></svg>
-                                    </a>
-                                </h6>
-                            </div>
-
-                            <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
-                                <ul class="your-profile-menu">
-                                    <li>
-                                        <a href="28-YourAccount-PersonalInformation.html">Personal Information</a>
-                                    </li>
-                                    <li>
-                                        <a href="29-YourAccount-AccountSettings.html">Account Settings</a>
-                                    </li>
-                                    <li>
-                                        <a href="30-YourAccount-ChangePassword.html">Change Password</a>
-                                    </li>
-                                    <li>
-                                        <a href="31-YourAccount-HobbiesAndInterests.html">Hobbies and Interests</a>
-                                    </li>
-                                    <li>
-                                        <a href="32-YourAccount-EducationAndEmployement.html">Education and Employement</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="ui-block-title">
-                        <a href="33-YourAccount-Notifications.html" class="h6 title">Notifications</a>
-                        <a href="#" class="items-round-little bg-primary">8</a>
-                    </div>
-                    <div class="ui-block-title">
-                        <a href="34-YourAccount-ChatMessages.html" class="h6 title">Chat / Messages</a>
-                    </div>
-                    <div class="ui-block-title">
-                        <a href="35-YourAccount-FriendsRequests.html" class="h6 title">Friend Requests</a>
-                        <a href="#" class="items-round-little bg-blue">4</a>
-                    </div>
-                    <div class="ui-block-title ui-block-title-small">
-                        <h6 class="title">FAVOURITE PAGE</h6>
-                    </div>
-                    <div class="ui-block-title">
-                        <a href="36-FavPage-SettingsAndCreatePopup.html" class="h6 title">Create Fav Page</a>
-                    </div>
-                    <div class="ui-block-title">
-                        <a href="36-FavPage-SettingsAndCreatePopup.html" class="h6 title">Fav Page Settings</a>
+                    <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+                        <ul class="your-profile-menu">
+                            <li>
+                                <a asp-action="PersonCommon">Personal Information</a>
+                            </li>
+                            <li>
+                                <a href="29-YourAccount-AccountSettings.html">Account Settings</a>
+                            </li>
+                            <li>
+                                <a href="30-YourAccount-ChangePassword.html">Change Password</a>
+                            </li>
+                            <li>
+                                <a asp-action="PersonHobbies">Hobbies and Interests</a>
+                            </li>
+                            <li>
+                                <a asp-action="PersonEducation">Education</a>
+                            </li>
+                            <li>
+                                <a asp-action="PersonEmployement">Employement</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
+            </div>
 
-                <!-- ... end Your Profile  -->
-
-
+            <div class="ui-block-title">
+                <a href="33-YourAccount-Notifications.html" class="h6 title">Notifications</a>
+                <a href="#" class="items-round-little bg-primary">8</a>
+            </div>
+            <div class="ui-block-title">
+                <a href="34-YourAccount-ChatMessages.html" class="h6 title">Chat / Messages</a>
+            </div>
+            <div class="ui-block-title">
+                <a href="35-YourAccount-FriendsRequests.html" class="h6 title">Friend Requests</a>
+                <a href="#" class="items-round-little bg-blue">4</a>
+            </div>
+            <div class="ui-block-title ui-block-title-small">
+                <h6 class="title">FAVOURITE PAGE</h6>
+            </div>
+            <div class="ui-block-title">
+                <a href="36-FavPage-SettingsAndCreatePopup.html" class="h6 title">Create Fav Page</a>
+            </div>
+            <div class="ui-block-title">
+                <a href="36-FavPage-SettingsAndCreatePopup.html" class="h6 title">Fav Page Settings</a>
             </div>
         </div>
+
+        <!-- ... end Your Profile  -->
+
+    </div>
+</div>
     </div>
 </div>
 
@@ -422,8 +366,6 @@
 </div>
 
 <!-- ... end Window-popup-CHAT for responsive min-width: 768px -->
-
-
 
 <a class="back-to-top" href="#">
     <img src="svg-icons/back-to-top.svg" alt="arrow" class="back-icon">

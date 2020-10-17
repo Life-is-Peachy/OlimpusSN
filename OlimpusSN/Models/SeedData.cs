@@ -1,19 +1,29 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
+﻿using System;
+using System.Text;
 
 namespace OlimpusSN.Models
 {
     public static class SeedData
     {
-        public static void Seed(DbContext context)
+        public static PersonAll SeedOnRegister() => InitialPersonAll;
+
+
+        public static string GenName()
         {
-            if (context is AppIdentityDbContext users && users.UserAll.Count() == 0)
-                users.UserAll.Add(User);
-            context.SaveChanges();
+            int Length = 10;
+            string Alphabet = "qwertyuiopasdfghjklzxcvbnm";
+            Random rnd = new Random();
+            StringBuilder sb = new StringBuilder(Length - 1);
+            int Position = 0;
+            for (int i = 0; i < Length; i++)
+            {
+                Position = rnd.Next(0, Alphabet.Length - 1);
+                sb.Append(Alphabet[Position]);
+
+            }
+            return sb.ToString();
         }
 
-        public static PersonAll SeedOnRegister() => InitialPersonAll;
 
         private static PersonAll InitialPersonAll
         {
@@ -21,6 +31,11 @@ namespace OlimpusSN.Models
             {
                 PersonCommon pc = new PersonCommon
                 {
+                    FirstName = "Не указано",
+                    LastName = "Не указано",
+                    Email = "Не указано",
+                    Birthday = DateTime.Now,
+                    Gender = Genders.Male,
                     WebSite = "Не указано",
                     PhoneNumber = "Не указано",
                     Country = Countries.USA,
@@ -54,16 +69,13 @@ namespace OlimpusSN.Models
                     PeriodOfEmployement = "Не указано",
                     Description = "Не указано"
                 };
-                PersonCareer pCr = new PersonCareer
-                {
-                    PersonEducation = pu,
-                    PersonEmployement = pe
-                };
+                
                 PersonAll pA = new PersonAll
                 {
                     PersonCommon = pc,
                     PersonHobbies = ph,
-                    PersonCareer = pCr
+                    PersonEducation = pu,
+                    PersonEmployement = pe
                 };
                 return pA;
             }
@@ -109,24 +121,17 @@ namespace OlimpusSN.Models
                     PeriodOfEmployement = "1-5",
                     Description = "Oh my"
                 };
-                PersonCareer pCr = new PersonCareer
-                {
-                    PersonEducation = pu,
-                    PersonEmployement = pe
-                };
                 PersonAll pA = new PersonAll
                 {
                     PersonCommon = pc,
                     PersonHobbies = ph,
-                    PersonCareer = pCr
+                    PersonEducation = pu,
+                    PersonEmployement = pe
                 };
                 AppUser user = new AppUser
                 {
                     UserName = "Van",
-                    LastName = "Darkholme",
                     Email = "Van@gmail.com",
-                    Birthday = DateTime.Now,
-                    Gender = Genders.Male,
                     PasswordHash = "AQAAAAEAACcQAAAAEB2uJKWxQVfSJ4QeHlytQl+dwcw6D4mx5v2R2+EUPIn/vj6G5qoMRXiG0IhiUr/2HA==",
                     PersonAll = pA
                 };

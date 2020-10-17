@@ -3,29 +3,43 @@ using System.Linq;
 
 namespace OlimpusSN.Models
 {
-    public interface IPersonRepository
+    public interface IPersonRepository<T> where T : class
     {
-        AppUser GetUser(string id);
+        T GetPerson(long id);
+
+        void Update(T data);
+
+        PersonAll GetPersonAll(long id);
     }
 
-
-    public class PersonRepository : IPersonRepository
+    public class PersonRepository<T> : IPersonRepository<T> where T : class
     {
-
         private AppIdentityDbContext _context;
 
 
         public PersonRepository(AppIdentityDbContext ctx) => _context = ctx;
 
 
-        public AppUser GetUser(string id)
+        public void Update(T data)
         {
-            return _context.UserAll.Include(i => i.PersonAll.PersonHobbies)
-            .Include(o => o.PersonAll.PersonCommon)
-            .Include(u => u.PersonAll.PersonCareer)
-            .ThenInclude(y => y.PersonEducation)
-            .Include(a => a.PersonAll.PersonCareer.PersonEmployement)
-            .First(e => e.Id == id);
+            _context.Update<T>(data);
+            _context.SaveChanges();
+        } 
+        
+
+        public T GetPerson(long id)
+        {
+            return _context.Set<T>().Find(id);
+        }
+
+
+        public PersonAll GetPersonAll(long id)
+        {
+            return _context.UserAll.Include(e => e.PersonAll.PersonCommon)
+                .Include(u => u.PersonAll.PersonHobbies)
+                .Include(o => o.PersonAll.PersonEducation)
+                .Include(a => a.PersonAll.PersonEmployement)
+                .First(y => y.Id == id).PersonAll;
         }
     }
 }

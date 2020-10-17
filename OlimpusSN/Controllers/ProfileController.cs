@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OlimpusSN.Models;
+using System;
 using System.Threading.Tasks;
 
 namespace OlimpusSN.Controllers
@@ -9,34 +10,38 @@ namespace OlimpusSN.Controllers
     [Authorize]
     public class ProfileController : Controller
     {
-        private readonly IPersonRepository _repository;
-
-        private readonly IPersonCommonRepository _crepository;
-
-        private readonly IPersonHobbiesRepository _hrepository;
-
-        private readonly IPersonCareerRepository _crrepository;
+        public long UserId => Convert.ToInt64(signInManager.UserManager.GetUserId(User));
 
         private readonly SignInManager<AppUser> signInManager;
 
+        private readonly IPersonRepository<PersonHobbies> _hobbiesRepository;
 
-        public ProfileController(SignInManager<AppUser> sgnMgr, IPersonRepository repo, IPersonCommonRepository crepo, IPersonHobbiesRepository hrepo, IPersonCareerRepository crrepo)
+        private readonly IPersonRepository<PersonCommon> _commonRepository;
+
+        private readonly IPersonRepository<PersonEducation> _educationRepository;
+
+        private readonly IPersonRepository<PersonEmployement> _employementRepository;
+
+        private readonly IPersonRepository<PersonAll> _allRepository;
+
+
+        public ProfileController(SignInManager<AppUser> sgnMgr, IPersonRepository<PersonHobbies> hobbie, IPersonRepository<PersonCommon> common,
+            IPersonRepository<PersonEducation> education, IPersonRepository<PersonEmployement> employement, IPersonRepository<PersonAll> all)
         {
             signInManager = sgnMgr;
-            _repository = repo;
-            _crepository = crepo;
-            _hrepository = hrepo;
-            _crrepository = crrepo;
+            _hobbiesRepository = hobbie;
+            _commonRepository = common;
+            _educationRepository = education;
+            _employementRepository = employement;
+            _allRepository = all;
         }
-
-
-        public string UserId => signInManager.UserManager.GetUserId(User);
 
 
         public IActionResult ProfilePage()
         {
             return View();
         }
+
 
         public IActionResult Newsfeed()
         {
@@ -46,30 +51,31 @@ namespace OlimpusSN.Controllers
 
         public IActionResult ProfileAbout()
         {
-            return View(_repository.GetUser(UserId).PersonAll);
+            return View(_allRepository.GetPersonAll(UserId));
         }
 
 
-        public IActionResult PersonCareer()
+        public IActionResult PersonEducation()
         {
-            return View(_crrepository.GetPerson(UserId));
+            return View(_educationRepository.GetPerson(UserId));
+        }
+
+
+        public IActionResult PersonEmployement()
+        {
+            return View(_employementRepository.GetPerson(UserId));
         }
 
 
         public IActionResult PersonHobbies()
         {
-            return View(_hrepository.GetPerson(UserId));
+            return View(_hobbiesRepository.GetPerson(UserId));
         }
 
 
         public IActionResult PersonCommon()
         {
-            ViewBag.FirstName = _repository.GetUser(UserId).UserName;
-            ViewBag.LastName = _repository.GetUser(UserId).LastName;
-            ViewBag.Email = _repository.GetUser(UserId).Email;
-            ViewBag.Birthday = _repository.GetUser(UserId).Birthday;
-            ViewBag.Gender = _repository.GetUser(UserId).Gender;
-            return View(_crepository.GetPerson(UserId));
+            return View(_commonRepository.GetPerson(UserId));
         }
 
 
@@ -81,26 +87,34 @@ namespace OlimpusSN.Controllers
 
 
         [HttpPost]
-        public RedirectResult CareerSave(PersonCareer career, string returnUrl)
+        public RedirectResult EducationSave(PersonEducation education, string returnUrl)
         {
-            _crrepository.Update(career);
+            _educationRepository.Update(education);
             return Redirect(returnUrl);
         }
 
 
         [HttpPost]
-        public IActionResult CommonSave(PersonCommon common)
+        public RedirectResult EmployementSave(PersonEmployement employement, string returnUrl)
         {
-            _crepository.Update(common);
-            return View(nameof(PersonCommon));
+            _employementRepository.Update(employement);
+            return Redirect(returnUrl);
         }
 
 
         [HttpPost]
-        public IActionResult HobbiesSave(PersonHobbies interests)
+        public RedirectResult CommonSave(PersonCommon common, string returnUrl)
         {
-            _hrepository.Update(interests);
-            return View(nameof(PersonHobbies));
+            _commonRepository.Update(common);
+            return Redirect(returnUrl);
+        }
+
+
+        [HttpPost]
+        public RedirectResult HobbiesSave(PersonHobbies interests, string returnUrl)
+        {
+            _hobbiesRepository.Update(interests);
+            return Redirect(returnUrl);
         }
     }
 }

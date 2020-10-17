@@ -20,13 +20,15 @@ namespace OlimpusSN
                 Configuration["Data:ConnectionStrings:Identity"]));
 
 
-            services.AddTransient<IPersonRepository, PersonRepository>();
-            services.AddTransient<IPersonCommonRepository, PersonCommonRepository>();
-            services.AddTransient<IPersonHobbiesRepository, PersonHobbiesRepository>();
-            services.AddTransient<IPersonCareerRepository, PersonCareerRepository>();
+            services.AddTransient<IPersonRepository<PersonAll>, PersonRepository<PersonAll>>();
+            services.AddTransient<IPersonRepository<PersonHobbies>, PersonRepository<PersonHobbies>>();
+            services.AddTransient<IPersonRepository<PersonCommon>, PersonRepository<PersonCommon>>();
+            services.AddTransient<IPersonRepository<PersonEducation>, PersonRepository<PersonEducation>>();
+            services.AddTransient<IPersonRepository<PersonEmployement>, PersonRepository<PersonEmployement>>();
 
+            services.AddTransient<IPostRepository, PostRepository>();
 
-            services.AddIdentity<AppUser, IdentityRole>()
+            services.AddIdentity<AppUser, IdentityRole<long>>()
                 .AddEntityFrameworkStores<AppIdentityDbContext>();
 
 
@@ -50,9 +52,8 @@ namespace OlimpusSN
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Profile}/{action=ProfileAbout}/{id?}");
+                    pattern: "{controller=Feed}/{action=Newsfeed}/{id?}");
             });
-            //SeedData.Seed(ctx);
         }
     }
 }

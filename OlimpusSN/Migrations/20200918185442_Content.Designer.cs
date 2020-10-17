@@ -10,8 +10,8 @@ using OlimpusSN.Models;
 namespace OlimpusSN.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20200917113237_PersonCareer2")]
-    partial class PersonCareer2
+    [Migration("20200918185442_Content")]
+    partial class Content
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,10 +21,12 @@ namespace OlimpusSN.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<long>", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -48,7 +50,7 @@ namespace OlimpusSN.Migrations
                     b.ToTable("AspNetRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -61,9 +63,8 @@ namespace OlimpusSN.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("RoleId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -72,7 +73,7 @@ namespace OlimpusSN.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<long>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -85,9 +86,8 @@ namespace OlimpusSN.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -96,7 +96,7 @@ namespace OlimpusSN.Migrations
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<long>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
@@ -107,9 +107,8 @@ namespace OlimpusSN.Migrations
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -118,13 +117,13 @@ namespace OlimpusSN.Migrations
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<long>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
 
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("RoleId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -133,10 +132,10 @@ namespace OlimpusSN.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<long>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
@@ -154,14 +153,13 @@ namespace OlimpusSN.Migrations
 
             modelBuilder.Entity("OlimpusSN.Models.AppUser", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("Birthday")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -173,12 +171,6 @@ namespace OlimpusSN.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -198,6 +190,9 @@ namespace OlimpusSN.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("PersonAllId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("PersonContentId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("PhoneNumber")
@@ -228,7 +223,33 @@ namespace OlimpusSN.Migrations
 
                     b.HasIndex("PersonAllId");
 
+                    b.HasIndex("PersonContentId");
+
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("OlimpusSN.Models.FeedPost", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OwnerFirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OwnerLasnName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PostDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FeedPost");
                 });
 
             modelBuilder.Entity("OlimpusSN.Models.PersonAll", b =>
@@ -238,32 +259,8 @@ namespace OlimpusSN.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long?>("PersonCareerId")
-                        .HasColumnType("bigint");
-
                     b.Property<long?>("PersonCommonId")
                         .HasColumnType("bigint");
-
-                    b.Property<long?>("PersonHobbiesId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PersonCareerId");
-
-                    b.HasIndex("PersonCommonId");
-
-                    b.HasIndex("PersonHobbiesId");
-
-                    b.ToTable("PersonAll");
-                });
-
-            modelBuilder.Entity("OlimpusSN.Models.PersonCareer", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<long?>("PersonEducationId")
                         .HasColumnType("bigint");
@@ -271,13 +268,20 @@ namespace OlimpusSN.Migrations
                     b.Property<long?>("PersonEmployementId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("PersonHobbiesId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PersonCommonId");
 
                     b.HasIndex("PersonEducationId");
 
                     b.HasIndex("PersonEmployementId");
 
-                    b.ToTable("PersonCareer");
+                    b.HasIndex("PersonHobbiesId");
+
+                    b.ToTable("PersonAll");
                 });
 
             modelBuilder.Entity("OlimpusSN.Models.PersonCommon", b =>
@@ -290,11 +294,26 @@ namespace OlimpusSN.Migrations
                     b.Property<string>("AboutMe")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("Birthday")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Birthplace")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Country")
                         .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Married")
                         .HasColumnType("int");
@@ -317,6 +336,23 @@ namespace OlimpusSN.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PersonCommon");
+                });
+
+            modelBuilder.Entity("OlimpusSN.Models.PersonContent", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long?>("FeedPostId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FeedPostId");
+
+                    b.ToTable("PersonContent");
                 });
 
             modelBuilder.Entity("OlimpusSN.Models.PersonEducation", b =>
@@ -397,16 +433,16 @@ namespace OlimpusSN.Migrations
                     b.ToTable("PersonHobbies");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<long>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<long>", b =>
                 {
                     b.HasOne("OlimpusSN.Models.AppUser", null)
                         .WithMany()
@@ -415,7 +451,7 @@ namespace OlimpusSN.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<long>", b =>
                 {
                     b.HasOne("OlimpusSN.Models.AppUser", null)
                         .WithMany()
@@ -424,9 +460,9 @@ namespace OlimpusSN.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<long>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<long>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -439,7 +475,7 @@ namespace OlimpusSN.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<long>", b =>
                 {
                     b.HasOne("OlimpusSN.Models.AppUser", null)
                         .WithMany()
@@ -453,25 +489,18 @@ namespace OlimpusSN.Migrations
                     b.HasOne("OlimpusSN.Models.PersonAll", "PersonAll")
                         .WithMany()
                         .HasForeignKey("PersonAllId");
+
+                    b.HasOne("OlimpusSN.Models.PersonContent", "PersonContent")
+                        .WithMany()
+                        .HasForeignKey("PersonContentId");
                 });
 
             modelBuilder.Entity("OlimpusSN.Models.PersonAll", b =>
                 {
-                    b.HasOne("OlimpusSN.Models.PersonCareer", "PersonCareer")
-                        .WithMany()
-                        .HasForeignKey("PersonCareerId");
-
                     b.HasOne("OlimpusSN.Models.PersonCommon", "PersonCommon")
                         .WithMany()
                         .HasForeignKey("PersonCommonId");
 
-                    b.HasOne("OlimpusSN.Models.PersonHobbies", "PersonHobbies")
-                        .WithMany()
-                        .HasForeignKey("PersonHobbiesId");
-                });
-
-            modelBuilder.Entity("OlimpusSN.Models.PersonCareer", b =>
-                {
                     b.HasOne("OlimpusSN.Models.PersonEducation", "PersonEducation")
                         .WithMany()
                         .HasForeignKey("PersonEducationId");
@@ -479,6 +508,17 @@ namespace OlimpusSN.Migrations
                     b.HasOne("OlimpusSN.Models.PersonEmployement", "PersonEmployement")
                         .WithMany()
                         .HasForeignKey("PersonEmployementId");
+
+                    b.HasOne("OlimpusSN.Models.PersonHobbies", "PersonHobbies")
+                        .WithMany()
+                        .HasForeignKey("PersonHobbiesId");
+                });
+
+            modelBuilder.Entity("OlimpusSN.Models.PersonContent", b =>
+                {
+                    b.HasOne("OlimpusSN.Models.FeedPost", "FeedPost")
+                        .WithMany()
+                        .HasForeignKey("FeedPostId");
                 });
 #pragma warning restore 612, 618
         }

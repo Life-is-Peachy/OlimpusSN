@@ -1,4 +1,6 @@
-﻿namespace OlimpusSN.Models
+﻿using System;
+
+namespace OlimpusSN.Models
 {
     public class PersonAll
     {
@@ -8,12 +10,24 @@
 
         public PersonHobbies PersonHobbies { get; set; }
 
-        public PersonCareer PersonCareer { get; set; }
+        public PersonEducation PersonEducation { get; set; }
+
+        public PersonEmployement PersonEmployement { get; set; }
     }
 
     public class PersonCommon
     {
         public long Id { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string Email { get; set; }
+
+        public DateTime Birthday { get; set; }
+
+        public Genders Gender { get; set; }
 
         public string WebSite { get; set; }
 
@@ -75,14 +89,5 @@
         public string PeriodOfEmployement { get; set; }
 
         public string Description { get; set; }
-    }
-
-    public class PersonCareer
-    {
-        public long Id { get; set; }
-
-        public PersonEducation PersonEducation { get; set; }
-
-        public PersonEmployement PersonEmployement { get; set; }
     }
 }

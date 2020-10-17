@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OlimpusSN.Migrations
 {
-    public partial class PersonCareer2 : Migration
+    public partial class Content : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +11,8 @@ namespace OlimpusSN.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true)
@@ -22,11 +23,32 @@ namespace OlimpusSN.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FeedPost",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OwnerFirstName = table.Column<string>(nullable: true),
+                    OwnerLasnName = table.Column<string>(nullable: true),
+                    PostDate = table.Column<DateTime>(nullable: false),
+                    Content = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FeedPost", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PersonCommon",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    Birthday = table.Column<DateTime>(nullable: false),
+                    Gender = table.Column<int>(nullable: false),
                     WebSite = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
                     Country = table.Column<int>(nullable: false),
@@ -98,7 +120,7 @@ namespace OlimpusSN.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<long>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -114,27 +136,20 @@ namespace OlimpusSN.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PersonCareer",
+                name: "PersonContent",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PersonEducationId = table.Column<long>(nullable: true),
-                    PersonEmployementId = table.Column<long>(nullable: true)
+                    FeedPostId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PersonCareer", x => x.Id);
+                    table.PrimaryKey("PK_PersonContent", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PersonCareer_PersonEducation_PersonEducationId",
-                        column: x => x.PersonEducationId,
-                        principalTable: "PersonEducation",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_PersonCareer_PersonEmployement_PersonEmployementId",
-                        column: x => x.PersonEmployementId,
-                        principalTable: "PersonEmployement",
+                        name: "FK_PersonContent_FeedPost_FeedPostId",
+                        column: x => x.FeedPostId,
+                        principalTable: "FeedPost",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -147,21 +162,28 @@ namespace OlimpusSN.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PersonCommonId = table.Column<long>(nullable: true),
                     PersonHobbiesId = table.Column<long>(nullable: true),
-                    PersonCareerId = table.Column<long>(nullable: true)
+                    PersonEducationId = table.Column<long>(nullable: true),
+                    PersonEmployementId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersonAll", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PersonAll_PersonCareer_PersonCareerId",
-                        column: x => x.PersonCareerId,
-                        principalTable: "PersonCareer",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_PersonAll_PersonCommon_PersonCommonId",
                         column: x => x.PersonCommonId,
                         principalTable: "PersonCommon",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PersonAll_PersonEducation_PersonEducationId",
+                        column: x => x.PersonEducationId,
+                        principalTable: "PersonEducation",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PersonAll_PersonEmployement_PersonEmployementId",
+                        column: x => x.PersonEmployementId,
+                        principalTable: "PersonEmployement",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -176,7 +198,8 @@ namespace OlimpusSN.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
@@ -191,10 +214,8 @@ namespace OlimpusSN.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    LastName = table.Column<string>(nullable: true),
-                    Birthday = table.Column<DateTime>(nullable: false),
-                    Gender = table.Column<int>(nullable: false),
-                    PersonAllId = table.Column<long>(nullable: true)
+                    PersonAllId = table.Column<long>(nullable: true),
+                    PersonContentId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -205,6 +226,12 @@ namespace OlimpusSN.Migrations
                         principalTable: "PersonAll",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_PersonContent_PersonContentId",
+                        column: x => x.PersonContentId,
+                        principalTable: "PersonContent",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -213,7 +240,7 @@ namespace OlimpusSN.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<long>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -235,7 +262,7 @@ namespace OlimpusSN.Migrations
                     LoginProvider = table.Column<string>(nullable: false),
                     ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -252,8 +279,8 @@ namespace OlimpusSN.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    UserId = table.Column<long>(nullable: false),
+                    RoleId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -276,7 +303,7 @@ namespace OlimpusSN.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<long>(nullable: false),
                     LoginProvider = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
@@ -337,9 +364,9 @@ namespace OlimpusSN.Migrations
                 column: "PersonAllId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonAll_PersonCareerId",
-                table: "PersonAll",
-                column: "PersonCareerId");
+                name: "IX_AspNetUsers_PersonContentId",
+                table: "AspNetUsers",
+                column: "PersonContentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersonAll_PersonCommonId",
@@ -347,19 +374,24 @@ namespace OlimpusSN.Migrations
                 column: "PersonCommonId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PersonAll_PersonEducationId",
+                table: "PersonAll",
+                column: "PersonEducationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersonAll_PersonEmployementId",
+                table: "PersonAll",
+                column: "PersonEmployementId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PersonAll_PersonHobbiesId",
                 table: "PersonAll",
                 column: "PersonHobbiesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonCareer_PersonEducationId",
-                table: "PersonCareer",
-                column: "PersonEducationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PersonCareer_PersonEmployementId",
-                table: "PersonCareer",
-                column: "PersonEmployementId");
+                name: "IX_PersonContent_FeedPostId",
+                table: "PersonContent",
+                column: "FeedPostId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -389,19 +421,22 @@ namespace OlimpusSN.Migrations
                 name: "PersonAll");
 
             migrationBuilder.DropTable(
-                name: "PersonCareer");
+                name: "PersonContent");
 
             migrationBuilder.DropTable(
                 name: "PersonCommon");
-
-            migrationBuilder.DropTable(
-                name: "PersonHobbies");
 
             migrationBuilder.DropTable(
                 name: "PersonEducation");
 
             migrationBuilder.DropTable(
                 name: "PersonEmployement");
+
+            migrationBuilder.DropTable(
+                name: "PersonHobbies");
+
+            migrationBuilder.DropTable(
+                name: "FeedPost");
         }
     }
 }

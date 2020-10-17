@@ -10,20 +10,15 @@ namespace OlimpusSN.Controllers
         private UserManager<AppUser> userManager;
         private SignInManager<AppUser> signInManager;
 
-
         public AccountController(UserManager<AppUser> usrMgr, SignInManager<AppUser> sgnMgr)
         {
             userManager = usrMgr;
             signInManager = sgnMgr;
         }
-
-
         public IActionResult Register()
         {
             return View();
         }
-
-
         [HttpPost]
         public async Task<IActionResult> Register(RegisterModel model)
         {
@@ -31,11 +26,8 @@ namespace OlimpusSN.Controllers
             {
                 AppUser user = new AppUser
                 {
-                    UserName = model.FirstName,
-                    LastName = model.LastName,
+                    UserName = SeedData.GenName(),
                     Email = model.Email,
-                    Birthday = model.Birthday,
-                    Gender = model.Gender,
                     PersonAll = SeedData.SeedOnRegister()
                 };
                 IdentityResult result = await userManager.CreateAsync(user, model.Password);
@@ -47,8 +39,6 @@ namespace OlimpusSN.Controllers
             }
             return View(model);
         }
-
-
         [HttpPost]
         public async Task<IActionResult> SignIn(SignInModel details, string returnUrl)
         {
