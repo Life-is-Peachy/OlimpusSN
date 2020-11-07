@@ -1,15 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace OlimpusSN.Models
 {
-    public class PersonContent
-    {
-        public long Id { get; set; }
-
-        public AppUSer FeedPost { get; set; }
-    }
-
-    public class AppUSer
+    public class Post
     {
         public long Id { get; set; }
 
@@ -20,5 +14,7 @@ namespace OlimpusSN.Models
         public DateTime PostDate { get; set; }
 
         public string Content { get; set; }
+
+        public User User { get; set; }
     }
 }

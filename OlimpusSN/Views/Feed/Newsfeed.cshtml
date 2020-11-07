@@ -1,20 +1,20 @@
-﻿@model AppUser
+﻿@model Post
 
 <div class="header-spacer"></div>
 
     <div class="container">
         <div class="row">
 
-            <!-- Main Content -->
+             @*Main Content*@ 
 
             <main class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
 
                 <div class="ui-block">
 
-                    <!-- News Feed Form  -->
+                     @*News Feed Form*@  
 
                     <div class="news-feed-form">
-                        <!-- Nav tabs -->
+                         @*Nav tabs*@ 
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active inline-items" data-toggle="tab" href="#home-1" role="tab" aria-expanded="true">
@@ -42,7 +42,7 @@
                             </li>
                         </ul>
 
-                        <!-- Tab panes -->
+                          @*Tab panes*@ 
                         <div class="tab-content">
                             <div class="tab-pane active" id="home-1" role="tabpanel" aria-expanded="true">
                                 <form asp-action="Post" method="post">
@@ -52,7 +52,7 @@
                                     </div>
                                     <div class="form-group with-icon label-floating is-empty">
                                         <label class="control-label">Share what you are thinking here...</label>
-                                        <textarea asp-for="@Model.PersonContent.FeedPost.Content"></textarea>
+                                        <textarea asp-for="@Model.Content"></textarea>
                                     </div>
                                     <div class="add-options-message">
                                         <a href="#" class="options-message" data-toggle="tooltip" data-placement="top" data-original-title="ADD PHOTOS">
@@ -134,7 +134,7 @@
                         </div>
                     </div>
 
-                    <!-- ... end News Feed Form  -->
+                     @*... end News Feed Form*@  
                 </div>
 
                 <div id="newsfeed-items-grid">
@@ -387,7 +387,7 @@
 
                         </article>
 
-                        <!-- Comments -->
+                         @*Comments*@ 
 
                         <ul class="comments-list">
                             <li class="comment-item">
@@ -445,12 +445,12 @@
                             </li>
                         </ul>
 
-                        <!-- ... end Comments -->
+                         @*... end Comments*@ 
 
                         <a href="#" class="more-comments">View more comments <span>+</span></a>
 
 
-                        <!-- Comment Form  -->
+                         @*Comment Form*@  
 
                         <form class="comment-form inline-items">
 
@@ -475,7 +475,7 @@
 
                         </form>
 
-                        <!-- ... end Comment Form  -->
+                         @*... end Comment Form*@  
                     </div>
 
                     <div class="ui-block">
@@ -805,13 +805,13 @@
 
             </main>
 
-            <!-- ... end Main Content -->
-            <!-- Left Sidebar -->
+             @*... end Main Content 
+             Left Sidebar*@ 
 
             <aside class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-12 col-12">
                 <div class="ui-block">
 
-                    <!-- W-Weather -->
+                     @*W-Weather*@ 
 
                     <div class="widget w-wethear">
                         <a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg></a>
@@ -892,12 +892,12 @@
 
                     </div>
 
-                    <!-- W-Weather -->
+                     @*W-Weather*@ 
                 </div>
 
                 <div class="ui-block">
 
-                    <!-- W-Calendar -->
+                     @*W-Calendar*@ 
 
                     <div class="w-calendar calendar-container">
                         <div class="calendar">
@@ -1300,7 +1300,7 @@
                         </div>
                     </div>
 
-                    <!-- ... end W-Calendar -->
+                     @*... end W-Calendar*@ 
                 </div>
 
                 <div class="ui-block">
@@ -1309,7 +1309,7 @@
                         <a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg></a>
                     </div>
 
-                    <!-- W-Friend-Pages-Added -->
+                     @*W-Friend-Pages-Added*@ 
 
                     <ul class="widget w-friend-pages-added notification-list friend-requests">
                         <li class="inline-items">
@@ -1406,18 +1406,18 @@
                         </li>
                     </ul>
 
-                    <!-- .. end W-Friend-Pages-Added -->
+                     @*.. end W-Friend-Pages-Added*@ 
                 </div>
             </aside>
 
-            <!-- ... end Left Sidebar -->
-            <!-- Right Sidebar -->
+             @*... end Left Sidebar 
+             Right Sidebar*@ 
 
             <aside class="col col-xl-3 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-12 col-12">
 
                 <div class="ui-block">
 
-                    <!-- W-Birthsday-Alert -->
+                     @*W-Birthsday-Alert*@ 
 
                     <div class="widget w-birthday-alert">
                         <div class="icons-block">
@@ -1435,7 +1435,7 @@
                         </div>
                     </div>
 
-                    <!-- ... end W-Birthsday-Alert -->
+                     @*... end W-Birthsday-Alert*@ 
                 </div>
 
                 <div class="ui-block">
@@ -1446,7 +1446,7 @@
 
 
 
-                    <!-- W-Action -->
+                     @*W-Action*@ 
 
                     <ul class="widget w-friend-pages-added notification-list friend-requests">
                         <li class="inline-items">
@@ -1502,7 +1502,7 @@
 
                     </ul>
 
-                    <!-- ... end W-Action -->
+                     @*... end W-Action*@ 
                 </div>
 
                 <div class="ui-block">
@@ -1513,7 +1513,7 @@
                     </div>
 
 
-                    <!-- W-Activity-Feed -->
+                     @*W-Activity-Feed*@ 
 
                     <ul class="widget w-activity-feed notification-list">
                         <li>
@@ -1606,14 +1606,14 @@
 
                     </ul>
 
-                    <!-- .. end W-Activity-Feed -->
+                     @*.. end W-Activity-Feed*@ 
                 </div>
 
 
                 <div class="ui-block">
 
 
-                    <!-- W-Action -->
+                     @*W-Action*@ 
 
                     <div class="widget w-action">
 
@@ -1625,18 +1625,18 @@
                         </div>
                     </div>
 
-                    <!-- ... end W-Action -->
+                     @*... end W-Action*@ 
                 </div>
 
             </aside>
 
-            <!-- ... end Right Sidebar -->
+             @*... end Right Sidebar*@ 
 
         </div>
     </div>
 
 
-    <!-- Window-popup Update Header Photo -->
+     @*Window-popup Update Header Photo*@ 
 
     <div class="modal fade" id="update-header-photo" tabindex="-1" role="dialog" aria-labelledby="update-header-photo" aria-hidden="true">
         <div class="modal-dialog window-popup update-header-photo" role="document">
@@ -1670,8 +1670,8 @@
     </div>
 
 
-    <!-- ... end Window-popup Update Header Photo -->
-    <!-- Window-popup Choose from my Photo -->
+     @*... end Window-popup Update Header Photo 
+     Window-popup Choose from my Photo*@ 
 
     <div class="modal fade" id="choose-from-my-photo" tabindex="-1" role="dialog" aria-labelledby="choose-from-my-photo" aria-hidden="true">
         <div class="modal-dialog window-popup choose-from-my-photo" role="document">
@@ -1683,7 +1683,7 @@
                 <div class="modal-header">
                     <h6 class="title">Choose from My Photos</h6>
 
-                    <!-- Nav tabs -->
+                     @*Nav tabs*@ 
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" data-toggle="tab" href="#home" role="tab" aria-expanded="true">
@@ -1699,7 +1699,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <!-- Tab panes -->
+                     @*Tab panes*@ 
                     <div class="tab-content">
                         <div class="tab-pane active" id="home" role="tabpanel" aria-expanded="true">
 
@@ -1852,7 +1852,7 @@
         </div>
     </div>
 
-    <!-- ... end Window-popup Choose from my Photo -->
+     @*.. end Window-popup Choose from my Photo*@ 
 
 
     <a class="back-to-top" href="#">
@@ -1862,7 +1862,7 @@
 
 
 
-    <!-- Window-popup-CHAT for responsive min-width: 768px -->
+     @*Window-popup-CHAT for responsive min-width: 768px*@ 
 
     <div class="ui-block popup-chat popup-chat-responsive" tabindex="-1" role="dialog" aria-labelledby="update-header-photo" aria-hidden="true">
 

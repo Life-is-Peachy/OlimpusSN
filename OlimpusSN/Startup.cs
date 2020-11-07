@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using OlimpusSN.Models;
+using System;
 
 namespace OlimpusSN
 {
@@ -16,8 +18,14 @@ namespace OlimpusSN
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(
-                Configuration["Data:ConnectionStrings:Identity"]));
+            services.AddDbContext<OlympusDbContext>(options => options.UseSqlServer(
+               Configuration["Data:ConnectionStrings:OlympusSN"]));
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = new PathString("/Account/SignIn");
+                });
 
 
             services.AddTransient<IPersonRepository<PersonAll>, PersonRepository<PersonAll>>();
@@ -28,32 +36,29 @@ namespace OlimpusSN
 
             services.AddTransient<IPostRepository, PostRepository>();
 
-            services.AddIdentity<AppUser, IdentityRole<long>>()
-                .AddEntityFrameworkStores<AppIdentityDbContext>();
-
-
-            services.ConfigureApplicationCookie(opts => { opts.LoginPath = "/Account/Register"; });
-
 
             services.AddControllersWithViews();
         }
 
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppIdentityDbContext ctx)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             app.UseDeveloperExceptionPage();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseAuthentication();
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Feed}/{action=Newsfeed}/{id?}");
+                    pattern: "{controller}/{action}/{id?}",
+                    defaults: new { controller = "Profile", action = "Profile" });
             });
+
+            //SeedData.InitialDb(serviceProvider);
         }
     }
 }

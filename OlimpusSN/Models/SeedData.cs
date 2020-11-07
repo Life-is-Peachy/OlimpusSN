@@ -1,28 +1,29 @@
-﻿using System;
-using System.Text;
+﻿using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace OlimpusSN.Models
 {
     public static class SeedData
     {
-        public static PersonAll SeedOnRegister() => InitialPersonAll;
-
-
-        public static string GenName()
+        public static PersonAll SeedOnRegister(params object[] person)
         {
-            int Length = 10;
-            string Alphabet = "qwertyuiopasdfghjklzxcvbnm";
-            Random rnd = new Random();
-            StringBuilder sb = new StringBuilder(Length - 1);
-            int Position = 0;
-            for (int i = 0; i < Length; i++)
-            {
-                Position = rnd.Next(0, Alphabet.Length - 1);
-                sb.Append(Alphabet[Position]);
-
-            }
-            return sb.ToString();
+            InitialPersonAll.PersonCommon.FirstName = (string)person[0];
+            InitialPersonAll.PersonCommon.LastName = (string)person[1];
+            InitialPersonAll.PersonCommon.Email = (string)person[2];
+            InitialPersonAll.PersonCommon.Birthday = (DateTime)person[3];
+            InitialPersonAll.PersonCommon.Gender = (Genders)person[4];
+            return InitialPersonAll;
         }
+        //public static void InitialDb(IServiceProvider appBuilder)
+        //{
+        //    OlympusDbContext OlympusDb = appBuilder.GetRequiredService<OlympusDbContext>();
+        //    if (!OlympusDb.Users.Any())
+        //    {
+        //        OlympusDb.Users.Add(User);
+        //        OlympusDb.SaveChanges();
+        //    }
+        //}
 
 
         private static PersonAll InitialPersonAll
@@ -31,9 +32,6 @@ namespace OlimpusSN.Models
             {
                 PersonCommon pc = new PersonCommon
                 {
-                    FirstName = "Не указано",
-                    LastName = "Не указано",
-                    Email = "Не указано",
                     Birthday = DateTime.Now,
                     Gender = Genders.Male,
                     WebSite = "Не указано",
@@ -69,7 +67,7 @@ namespace OlimpusSN.Models
                     PeriodOfEmployement = "Не указано",
                     Description = "Не указано"
                 };
-                
+
                 PersonAll pA = new PersonAll
                 {
                     PersonCommon = pc,
@@ -82,7 +80,7 @@ namespace OlimpusSN.Models
         }
 
 
-        private static AppUser User
+        private static User User
         {
             get
             {
@@ -128,11 +126,10 @@ namespace OlimpusSN.Models
                     PersonEducation = pu,
                     PersonEmployement = pe
                 };
-                AppUser user = new AppUser
+                User user = new User
                 {
-                    UserName = "Van",
                     Email = "Van@gmail.com",
-                    PasswordHash = "AQAAAAEAACcQAAAAEB2uJKWxQVfSJ4QeHlytQl+dwcw6D4mx5v2R2+EUPIn/vj6G5qoMRXiG0IhiUr/2HA==",
+                    Password = "DeepDark",
                     PersonAll = pA
                 };
                 return user;

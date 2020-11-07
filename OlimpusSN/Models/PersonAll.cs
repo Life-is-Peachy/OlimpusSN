@@ -89,5 +89,7 @@ namespace OlimpusSN.Models
         public string PeriodOfEmployement { get; set; }
 
         public string Description { get; set; }
+
+        
     }
 }

@@ -1,22 +1,23 @@
 ﻿using System;
-using Microsoft.AspNetCore.Identity;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OlimpusSN.Models;
 
 namespace OlimpusSN.Controllers
 {
     public class FeedController : Controller
     {
+        private OlympusDbContext _context;
+
+        public long UserId => GetId(HttpContext.User.Identity.Name);
+
         private IPostRepository _postRepository;
 
-        public long UserId => Convert.ToInt64(signInManager.UserManager.GetUserId(User));
-
-        private readonly SignInManager<AppUser> signInManager;
-
-        public FeedController(IPostRepository post, SignInManager<AppUser> sgnMgr)
+        public FeedController(IPostRepository post, OlympusDbContext ctx)
         {
             _postRepository = post;
-            signInManager = sgnMgr;
+            _context = ctx;
         }
 
 
@@ -27,13 +28,21 @@ namespace OlimpusSN.Controllers
 
 
         [HttpPost]
-        public IActionResult Post(AppUser post)
+        public IActionResult Post(Post post)
         {
-            post.Id = UserId;
+            post.OwnerFirstName = _context.Users.First(x => x.ID == UserId).FirstName;
+            post.OwnerLasnName = _context.Users.First(x => x.ID == UserId).LastName;
+            post.PostDate = DateTime.Now;
+            post.User = _context.Users.First(x => x.ID == UserId);
+
             _postRepository.CreatePost(post);
             return RedirectToAction(nameof(Newsfeed));
+
         }
 
-
+        private long GetId(string email)
+        {
+            return _context.Users.FirstOrDefault(x => x.Email == email).ID;
+        }
     }
 }

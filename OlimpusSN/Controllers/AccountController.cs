@@ -1,62 +1,104 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OlimpusSN.Models;
+using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace OlimpusSN.Controllers
 {
     public class AccountController : Controller
     {
-        private UserManager<AppUser> userManager;
-        private SignInManager<AppUser> signInManager;
+        private OlympusDbContext _context;
 
-        public AccountController(UserManager<AppUser> usrMgr, SignInManager<AppUser> sgnMgr)
-        {
-            userManager = usrMgr;
-            signInManager = sgnMgr;
-        }
-        public IActionResult Register()
+        public AccountController(OlympusDbContext ctx) => _context = ctx;
+
+
+
+        public IActionResult SignIn()
         {
             return View();
         }
+
+
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterModel model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(User user)
         {
             if (ModelState.IsValid)
             {
-                AppUser user = new AppUser
+                User IsUserAlreadyExists = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
+
+                if (IsUserAlreadyExists == null)
                 {
-                    UserName = SeedData.GenName(),
-                    Email = model.Email,
-                    PersonAll = SeedData.SeedOnRegister()
-                };
-                IdentityResult result = await userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                    return RedirectToAction("PersonHobbies", "Profile");
-                else
-                    foreach (IdentityError error in result.Errors)
-                        ModelState.AddModelError("", error.Description);
-            }
-            return View(model);
-        }
-        [HttpPost]
-        public async Task<IActionResult> SignIn(SignInModel details, string returnUrl)
-        {
-            if (ModelState.IsValid)
-            {
-                AppUser user = await userManager.FindByEmailAsync(details.Email);
-                if (user != null)
-                {
-                    await signInManager.SignOutAsync();
-                    Microsoft.AspNetCore.Identity.SignInResult result =
-                        await signInManager.PasswordSignInAsync(user, details.Password, false, false);
-                    if (result.Succeeded)
-                        return Redirect(returnUrl ?? "/");
+                    _context.Users.Add(new User
+                    {
+                        Email = user.Email,
+                        Password = user.Password,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Birthday = user.Birthday,
+                        Gender = user.Gender,
+                        PersonAll = SeedData.SeedOnRegister(user.FirstName, user.LastName, user.Email, user.Birthday, user.Gender)
+                });
+                    await _context.SaveChangesAsync();
+                    await Authenticate(user.Email);
+
+                    return RedirectToAction("Profile", "Profile");
                 }
                 else
-                    ModelState.AddModelError(nameof(SignInModel.Email), "Invalid User or Password");
+                    ModelState.AddModelError("", "Некорректный логин или пароль");
             }
-            return View(details);
+            return View(nameof(SignIn), user);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SignIn(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                User IsUserExists = await _context.Users.
+                    FirstOrDefaultAsync(u => u.Email == user.Email && u.Password == user.Password);
+
+                if (IsUserExists != null)
+                {
+                    await Authenticate(user.Email);
+                    return RedirectToAction("Profile", "Profile");
+                }
+                else
+                    ModelState.AddModelError("", "Некорректный логин или пароль");
+            }
+            return View(user);
+        }
+
+
+        public async Task<IActionResult> SignOut()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction(nameof(SignIn));
+        }
+
+
+        private async Task Authenticate(string Email)
+        {
+            List<Claim> claims = new List<Claim>()
+            {
+                new Claim(ClaimsIdentity.DefaultNameClaimType, Email)
+            };
+
+            ClaimsIdentity identity = new ClaimsIdentity
+                (claims,
+                "OlympusCoockie",
+                ClaimsIdentity.DefaultNameClaimType,
+                ClaimsIdentity.DefaultRoleClaimType);
+
+            await HttpContext.SignInAsync
+                (CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(identity));
         }
     }
 }

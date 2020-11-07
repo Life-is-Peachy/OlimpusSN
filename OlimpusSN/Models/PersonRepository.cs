@@ -14,10 +14,10 @@ namespace OlimpusSN.Models
 
     public class PersonRepository<T> : IPersonRepository<T> where T : class
     {
-        private AppIdentityDbContext _context;
+        private OlympusDbContext _context;
 
 
-        public PersonRepository(AppIdentityDbContext ctx) => _context = ctx;
+        public PersonRepository(OlympusDbContext ctx) => _context = ctx;
 
 
         public void Update(T data)
@@ -34,12 +34,12 @@ namespace OlimpusSN.Models
 
 
         public PersonAll GetPersonAll(long id)
-        {
-            return _context.UserAll.Include(e => e.PersonAll.PersonCommon)
+        { 
+            return _context.Users.Include(e => e.PersonAll.PersonCommon)
                 .Include(u => u.PersonAll.PersonHobbies)
                 .Include(o => o.PersonAll.PersonEducation)
                 .Include(a => a.PersonAll.PersonEmployement)
-                .First(y => y.Id == id).PersonAll;
+                .First(y => y.ID == id).PersonAll;
         }
     }
 }
