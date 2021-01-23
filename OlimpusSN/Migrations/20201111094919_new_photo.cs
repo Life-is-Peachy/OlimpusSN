@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OlimpusSN.Migrations
 {
-    public partial class First : Migration
+    public partial class new_photo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -149,6 +149,27 @@ namespace OlimpusSN.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Photos",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UploadDate = table.Column<DateTime>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    UserID = table.Column<long>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Photos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Photos_Users_UserID",
+                        column: x => x.UserID,
+                        principalTable: "Users",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Posts",
                 columns: table => new
                 {
@@ -192,6 +213,11 @@ namespace OlimpusSN.Migrations
                 column: "PersonHobbiesId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Photos_UserID",
+                table: "Photos",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Posts_UserID",
                 table: "Posts",
                 column: "UserID");
@@ -204,6 +230,9 @@ namespace OlimpusSN.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Photos");
+
             migrationBuilder.DropTable(
                 name: "Posts");
 

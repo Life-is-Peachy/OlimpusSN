@@ -13,17 +13,18 @@ namespace OlimpusSN.Models
             InitialPersonAll.PersonCommon.Email = (string)person[2];
             InitialPersonAll.PersonCommon.Birthday = (DateTime)person[3];
             InitialPersonAll.PersonCommon.Gender = (Genders)person[4];
+
             return InitialPersonAll;
         }
-        //public static void InitialDb(IServiceProvider appBuilder)
-        //{
-        //    OlympusDbContext OlympusDb = appBuilder.GetRequiredService<OlympusDbContext>();
-        //    if (!OlympusDb.Users.Any())
-        //    {
-        //        OlympusDb.Users.Add(User);
-        //        OlympusDb.SaveChanges();
-        //    }
-        //}
+        public static void InitialDb(IServiceProvider appBuilder)
+        {
+            OlympusDbContext OlympusDb = appBuilder.GetRequiredService<OlympusDbContext>();
+            if (!OlympusDb.Users.Any())
+            {
+                OlympusDb.Users.Add(User);
+                OlympusDb.SaveChanges();
+            }
+        }
 
 
         private static PersonAll InitialPersonAll
@@ -128,10 +129,15 @@ namespace OlimpusSN.Models
                 };
                 User user = new User
                 {
-                    Email = "Van@gmail.com",
-                    Password = "DeepDark",
+                    Email = "Bozya603@gmail.com",
+                    Password = "Sparkmedia123$",
+                    FirstName = "Sergey",
+                    LastName = "Ivanin",
+                    Birthday = new DateTime(1998, 01, 12),
+                    Gender = Genders.Male,
                     PersonAll = pA
                 };
+
                 return user;
             }
         }

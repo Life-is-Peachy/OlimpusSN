@@ -183,6 +183,29 @@ namespace OlimpusSN.Migrations
                     b.ToTable("PersonHobbies");
                 });
 
+            modelBuilder.Entity("OlimpusSN.Models.Photografy", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UploadDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("UserID")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Photos");
+                });
+
             modelBuilder.Entity("OlimpusSN.Models.Post", b =>
                 {
                     b.Property<long>("Id")
@@ -264,6 +287,13 @@ namespace OlimpusSN.Migrations
                     b.HasOne("OlimpusSN.Models.PersonHobbies", "PersonHobbies")
                         .WithMany()
                         .HasForeignKey("PersonHobbiesId");
+                });
+
+            modelBuilder.Entity("OlimpusSN.Models.Photografy", b =>
+                {
+                    b.HasOne("OlimpusSN.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID");
                 });
 
             modelBuilder.Entity("OlimpusSN.Models.Post", b =>

@@ -18,6 +18,8 @@ namespace OlimpusSN.Models
 
         public DbSet<Post> Posts { get; set; }
 
+        public DbSet<Photografy> Photos { get; set; }
+
         public OlympusDbContext(DbContextOptions<OlympusDbContext> options)
             : base(options) { }
     }

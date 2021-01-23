@@ -14,32 +14,29 @@ namespace OlimpusSN.Models
 
     public class PersonRepository<T> : IPersonRepository<T> where T : class
     {
-        private OlympusDbContext _context;
+        private readonly OlympusDbContext _context;
 
 
-        public PersonRepository(OlympusDbContext ctx) => _context = ctx;
+        public PersonRepository(OlympusDbContext ctx) 
+            => _context = ctx;
 
 
         public void Update(T data)
         {
             _context.Update<T>(data);
-            _context.SaveChanges();
+            _context.SaveChangesAsync();
         } 
         
 
-        public T GetPerson(long id)
-        {
-            return _context.Set<T>().Find(id);
-        }
-
-
         public PersonAll GetPersonAll(long id)
-        { 
-            return _context.Users.Include(e => e.PersonAll.PersonCommon)
+            =>_context.Users.Include(e => e.PersonAll.PersonCommon)
                 .Include(u => u.PersonAll.PersonHobbies)
                 .Include(o => o.PersonAll.PersonEducation)
                 .Include(a => a.PersonAll.PersonEmployement)
-                .First(y => y.ID == id).PersonAll;
-        }
+                .First(y => y.Id == id).PersonAll;
+
+
+        public T GetPerson(long id)
+            => _context.Set<T>().Find(id);
     }
 }

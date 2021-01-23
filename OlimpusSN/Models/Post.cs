@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace OlimpusSN.Models
 {
-    public class Post
+    public class Post : DbEntity
     {
-        public long Id { get; set; }
-
         public string OwnerFirstName { get; set; }
 
         public string OwnerLasnName { get; set; }

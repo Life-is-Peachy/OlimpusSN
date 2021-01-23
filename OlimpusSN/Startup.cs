@@ -34,7 +34,9 @@ namespace OlimpusSN
             services.AddTransient<IPersonRepository<PersonEducation>, PersonRepository<PersonEducation>>();
             services.AddTransient<IPersonRepository<PersonEmployement>, PersonRepository<PersonEmployement>>();
 
+            services.AddTransient<IAccountManager, AccountManager>();
             services.AddTransient<IPostRepository, PostRepository>();
+            services.AddTransient<IPhotoRepository, PhotoRepository>();
 
 
             services.AddControllersWithViews();
@@ -58,7 +60,7 @@ namespace OlimpusSN
                     defaults: new { controller = "Profile", action = "Profile" });
             });
 
-            //SeedData.InitialDb(serviceProvider);
+            SeedData.InitialDb(serviceProvider);
         }
     }
 }

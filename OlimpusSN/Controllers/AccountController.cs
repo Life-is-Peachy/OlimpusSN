@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using OlimpusSN.Models;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -11,29 +10,27 @@ namespace OlimpusSN.Controllers
 {
     public class AccountController : Controller
     {
-        private OlympusDbContext _context;
+        private IAccountManager _accountManager;
 
-        public AccountController(OlympusDbContext ctx) => _context = ctx;
+        public AccountController(IAccountManager mng)
+            => _accountManager = mng;
 
 
-
-        public IActionResult SignIn()
-        {
-            return View();
-        }
+        public ActionResult SignIn()
+            => View();
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(User user)
+        public async Task<ActionResult> Register(User user)
         {
             if (ModelState.IsValid)
             {
-                User IsUserAlreadyExists = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
+                bool IsAlreadyExists = _accountManager.UserExists(user.Email);
 
-                if (IsUserAlreadyExists == null)
+                if (!IsAlreadyExists)
                 {
-                    _context.Users.Add(new User
+                    User newUser = new User
                     {
                         Email = user.Email,
                         Password = user.Password,
@@ -42,14 +39,17 @@ namespace OlimpusSN.Controllers
                         Birthday = user.Birthday,
                         Gender = user.Gender,
                         PersonAll = SeedData.SeedOnRegister(user.FirstName, user.LastName, user.Email, user.Birthday, user.Gender)
-                });
-                    await _context.SaveChangesAsync();
-                    await Authenticate(user.Email);
+                    };
+
+                    long id = _accountManager.Register(newUser);
+                    await Authenticate(id);
 
                     return RedirectToAction("Profile", "Profile");
                 }
                 else
+                {
                     ModelState.AddModelError("", "Некорректный логин или пароль");
+                }
             }
             return View(nameof(SignIn), user);
         }
@@ -57,48 +57,44 @@ namespace OlimpusSN.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SignIn(User user)
+        public async Task<ActionResult> SignIn(User user)
         {
             if (ModelState.IsValid)
             {
-                User IsUserExists = await _context.Users.
-                    FirstOrDefaultAsync(u => u.Email == user.Email && u.Password == user.Password);
+                User IfUserExists = _accountManager.SignAhead(user.Email, user.Password);
 
-                if (IsUserExists != null)
+                if (IfUserExists != null)
                 {
-                    await Authenticate(user.Email);
+                    await Authenticate(IfUserExists.Id);
                     return RedirectToAction("Profile", "Profile");
                 }
                 else
+                {
                     ModelState.AddModelError("", "Некорректный логин или пароль");
+                }
             }
             return View(user);
         }
 
 
-        public async Task<IActionResult> SignOut()
+        public async Task<ActionResult> SignOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction(nameof(SignIn));
         }
 
 
-        private async Task Authenticate(string Email)
+        private async Task Authenticate(long id)
         {
             List<Claim> claims = new List<Claim>()
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, Email)
+                new Claim(ClaimTypes.NameIdentifier, id.ToString())
             };
 
-            ClaimsIdentity identity = new ClaimsIdentity
-                (claims,
-                "OlympusCoockie",
-                ClaimsIdentity.DefaultNameClaimType,
-                ClaimsIdentity.DefaultRoleClaimType);
+            ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-            await HttpContext.SignInAsync
-                (CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(identity));
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
         }
     }
 }
+
