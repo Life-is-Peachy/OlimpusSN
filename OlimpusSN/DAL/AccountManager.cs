@@ -26,7 +26,7 @@ namespace OlimpusSN.Models
         }
 
         public bool UserExists(string email)
-            =>_context.Users.FirstOrDefault(x => x.Email == email) == null ? false : true;
+            => _context.Users.FirstOrDefault(x => x.Email == email) != null;
 
 
         public User SignAhead(string email, string password)

@@ -10,7 +10,7 @@ namespace OlimpusSN.Controllers
 {
     public class AccountController : Controller
     {
-        private IAccountManager _accountManager;
+        private readonly IAccountManager _accountManager;
 
         public AccountController(IAccountManager mng)
             => _accountManager = mng;

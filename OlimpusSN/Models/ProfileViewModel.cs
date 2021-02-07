@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace OlimpusSN.Models
 {
@@ -7,5 +6,6 @@ namespace OlimpusSN.Models
     {
         public Post Post { get; set; }
         public IEnumerable<Post> ListPosts { get; set; }
+        public PersonCommon About { get; set; }
     }
 }

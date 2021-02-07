@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace OlimpusSN.Models
 {
     public interface IPostRepository
     {
         void CreatePost(Post post, long id);
-        ProfileViewModel GetPost(long id);
+        void EditPost(Post post, long id);
+        void DeletePost(long id);
+        IEnumerable<Post> GetPost(long id);
     }
 
 
     public class PostRepository : IPostRepository
     {
-        private OlympusDbContext _context;
+        private readonly OlympusDbContext _context;
 
-        public PostRepository(OlympusDbContext ctx) 
-            => _context = ctx; 
+        public PostRepository(OlympusDbContext ctx) => _context = ctx; 
 
 
         public void CreatePost(Post post, long id)
@@ -31,15 +33,30 @@ namespace OlimpusSN.Models
             _context.SaveChanges();
         }
 
-        public ProfileViewModel GetPost(long id)
+        public void EditPost(Post post, long id)
         {
-            ProfileViewModel viewModel = new ProfileViewModel
-            {
-                Post = default,
-                ListPosts = _context.Posts.Where(x => x.User.Id == id)
-            };
+            User user = GetUser(id);
 
-            return viewModel;
+            post.OwnerFirstName = user.FirstName;
+            post.OwnerLasnName = user.LastName;
+            post.PostDate = DateTime.Now;
+            post.User = user;
+
+            _context.Posts.Update(post);
+            _context.SaveChanges();
+        }
+
+
+        public IEnumerable<Post> GetPost(long id)
+        {
+            return _context.Posts.Where(x => x.User.Id == id);
+        }
+
+
+        public void DeletePost(long id)
+        {
+            _context.Posts.Remove(_context.Posts.FirstOrDefault(x => x.Id == id));
+            _context.SaveChanges();
         }
 
         private User GetUser(long id)

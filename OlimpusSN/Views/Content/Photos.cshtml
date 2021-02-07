@@ -70,7 +70,7 @@
                         <img src="img/avatar57-sm.jpg" alt="author">
                     </div>
                     <div class="notification-event">
-                        You and <a href="#" class="h6 notification-friend">Mary Jane Stark</a> just became friends. Write on <a href="#" class="notification-link">her wall</a>.
+                        You and <a href="#" class="h6 notification-friend">Mary Jane Stark</a> just became friends. Write on <a href="#" class="notification-link">her wall</a>
                     </div>
                     <span class="notification-icon">
                         <svg class="olymp-happy-face-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
@@ -379,42 +379,9 @@
 
                                 <div class="photo-album-wrapper">
 
-                                    @foreach (var photo in Model)
+                                    @foreach (var item in Model)
                                     {
-                                        <div class="photo-item col-4-width">
-                                            <form method="post">
-                                                <img src="@photo.Name" alt="photo">
-                                                <div class="overlay overlay-dark"></div>
-                                                <a href="#" class="more"><svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg></a>
-                                                <a href="#" class="post-add-icon inline-items">
-                                                    <svg class="olymp-heart-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-heart-icon"></use></svg>
-                                                    <span>15</span>
-                                                </a>
-
-                                                <a href="#" data-toggle="modal" data-target="#open-photo-popup-v2" class="  full-block"></a>
-                                                <div class="more">
-                                                    <svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg>
-                                                    <ul class="more-dropdown">
-                                                        <li>
-                                                            <a href="#">Edit Post</a>
-                                                        </li>
-                                                        <li>
-                                                            <a asp-action="Delete" asp-route-id="@photo.Id" asp-route-name="@photo.Name">Delete Post</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">Turn Off Notifications</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">Select as Featured</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div class="content">
-                                                    <a href="#" class="h6 title">Header Photos</a>
-                                                    <time class="published" datetime="2017-03-24T18:18">@photo.UploadDate</time>
-                                                </div>
-                                            </form>
-                                        </div>
+                                        <partial name="PartialViews/PhotoCollection" model="item" />
                                     }
 
                                     <a href="#" class="btn btn-control btn-more"><svg class="olymp-three-dots-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-three-dots-icon"></use></svg></a>
@@ -593,8 +560,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                     If we need pagination 
-                                    <div class="swiper-pagination"></div>
+                                                    If we need pagination
+                                                    <div class="swiper-pagination"></div>
                                                 </div>
                                             </div>
 
@@ -650,8 +617,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                     If we need pagination 
-                                    <div class="swiper-pagination"></div>
+                                                    If we need pagination
+                                                    <div class="swiper-pagination"></div>
                                                 </div>
                                             </div>
 
@@ -721,8 +688,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                     If we need pagination 
-                                    <div class="swiper-pagination"></div>
+                                                    If we need pagination
+                                                    <div class="swiper-pagination"></div>
                                                 </div>
                                             </div>
 
@@ -822,8 +789,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                     If we need pagination 
-                                    <div class="swiper-pagination"></div>
+                                                    If we need pagination
+                                                    <div class="swiper-pagination"></div>
                                                 </div>
                                             </div>
 
@@ -878,8 +845,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                     If we need pagination 
-                                    <div class="swiper-pagination"></div>
+                                                    If we need pagination
+                                                    <div class="swiper-pagination"></div>
                                                 </div>
                                             </div>
 
@@ -945,8 +912,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                     If we need pagination 
-                                    <div class="swiper-pagination"></div>
+                                                    If we need pagination
+                                                    <div class="swiper-pagination"></div>
                                                 </div>
                                             </div>
 
@@ -1650,19 +1617,19 @@
                                         </div>
                                     </div>
                                 </div>
-                               
-                                    <div class="photo-album-item-wrap col-3-width">
-                                        <div class="photo-album-item" data-mh="album-item">
-                                            <div class="form-group">
-                                                <img src="img/photo-album6.jpg" alt="photo">
-                                                <textarea class="form-control" placeholder="Write something about this photo..."></textarea>
-                                            </div>
 
-                                            <form class="form-group label-floating is-select">
-                                                <svg class="olymp-happy-face-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
+                                <div class="photo-album-item-wrap col-3-width">
+                                    <div class="photo-album-item" data-mh="album-item">
+                                        <div class="form-group">
+                                            <img src="img/photo-album6.jpg" alt="photo">
+                                            <textarea class="form-control" placeholder="Write something about this photo..."></textarea>
+                                        </div>
 
-                                                <select class="selectpicker form-control style-2 show-tick" multiple data-max-options="2" data-live-search="true">
-                                                    <option title="Green Goo Rock" data-content='<div class="inline-items">
+                                        <form class="form-group label-floating is-select">
+                                            <svg class="olymp-happy-face-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
+
+                                            <select class="selectpicker form-control style-2 show-tick" multiple data-max-options="2" data-live-search="true">
+                                                <option title="Green Goo Rock" data-content='<div class="inline-items">
 										<div class="author-thumb">
 											<img src="img/avatar52-sm.jpg" alt="author">
 										</div>
@@ -1671,7 +1638,7 @@
 										</div>'>Green Goo Rock
 								</option>
 
-                                                    <option title="Mathilda Brinker" data-content='<div class="inline-items">
+                                                <option title="Mathilda Brinker" data-content='<div class="inline-items">
 											<div class="author-thumb">
 												<img src="img/avatar74-sm.jpg" alt="author">
 											</div>
@@ -1679,7 +1646,7 @@
 										</div>'>Mathilda Brinker
 								</option>
 
-                                                    <option title="Marina Valentine" data-content='<div class="inline-items">
+                                                <option title="Marina Valentine" data-content='<div class="inline-items">
 											<div class="author-thumb">
 												<img src="img/avatar48-sm.jpg" alt="author">
 											</div>
@@ -1687,7 +1654,7 @@
 										</div>'>Marina Valentine
 								</option>
 
-                                                    <option title="Dave Marinara" data-content='<div class="inline-items">
+                                                <option title="Dave Marinara" data-content='<div class="inline-items">
 											<div class="author-thumb">
 												<img src="img/avatar75-sm.jpg" alt="author">
 											</div>
@@ -1695,7 +1662,7 @@
 										</div>'>Dave Marinara
 								</option>
 
-                                                    <option title="Rachel Howlett" data-content='<div class="inline-items">
+                                                <option title="Rachel Howlett" data-content='<div class="inline-items">
 											<div class="author-thumb">
 												<img src="img/avatar76-sm.jpg" alt="author">
 											</div>
@@ -1703,23 +1670,23 @@
 										</div>'>Rachel Howlett
 								</option>
 
-                                                </select>
-                                            </form>
-                                        </div>
+                                            </select>
+                                        </form>
                                     </div>
-                                
+                                </div>
+
                                 <div class="photo-album-item-wrap col-3-width">
-                                        <div class="photo-album-item" data-mh="album-item">
-                                            <div class="form-group">
-                                                <img src="img/photo-album6.jpg" alt="photo">
-                                                <textarea class="form-control" placeholder="Write something about this photo..."></textarea>
-                                            </div>
+                                    <div class="photo-album-item" data-mh="album-item">
+                                        <div class="form-group">
+                                            <img src="img/photo-album6.jpg" alt="photo">
+                                            <textarea class="form-control" placeholder="Write something about this photo..."></textarea>
+                                        </div>
 
-                                            <form class="form-group label-floating is-select">
-                                                <svg class="olymp-happy-face-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
+                                        <form class="form-group label-floating is-select">
+                                            <svg class="olymp-happy-face-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
 
-                                                <select class="selectpicker form-control style-2 show-tick" multiple data-max-options="2" data-live-search="true">
-                                                    <option title="Green Goo Rock" data-content='<div class="inline-items">
+                                            <select class="selectpicker form-control style-2 show-tick" multiple data-max-options="2" data-live-search="true">
+                                                <option title="Green Goo Rock" data-content='<div class="inline-items">
                                             <div class="author-thumb">
                                                 <img src="img/avatar52-sm.jpg" alt="author">
                                             </div>
@@ -1728,7 +1695,7 @@
                                             </div>'>Green Goo Rock
                                     </option>
 
-                                                    <option title="Mathilda Brinker" data-content='<div class="inline-items">
+                                                <option title="Mathilda Brinker" data-content='<div class="inline-items">
                                                 <div class="author-thumb">
                                                     <img src="img/avatar74-sm.jpg" alt="author">
                                                 </div>
@@ -1736,7 +1703,7 @@
                                             </div>'>Mathilda Brinker
                                     </option>
 
-                                                    <option title="Marina Valentine" data-content='<div class="inline-items">
+                                                <option title="Marina Valentine" data-content='<div class="inline-items">
                                                 <div class="author-thumb">
                                                     <img src="img/avatar48-sm.jpg" alt="author">
                                                 </div>
@@ -1744,7 +1711,7 @@
                                             </div>'>Marina Valentine
                                     </option>
 
-                                                    <option title="Dave Marinara" data-content='<div class="inline-items">
+                                                <option title="Dave Marinara" data-content='<div class="inline-items">
                                                 <div class="author-thumb">
                                                     <img src="img/avatar75-sm.jpg" alt="author">
                                                 </div>
@@ -1752,7 +1719,7 @@
                                             </div>'>Dave Marinara
                                     </option>
 
-                                                    <option title="Rachel Howlett" data-content='<div class="inline-items">
+                                                <option title="Rachel Howlett" data-content='<div class="inline-items">
                                                 <div class="author-thumb">
                                                     <img src="img/avatar76-sm.jpg" alt="author">
                                                 </div>
@@ -1760,22 +1727,22 @@
                                             </div>'>Rachel Howlett
                                     </option>
 
-                                                </select>
-                                            </form>
-                                        </div>
+                                            </select>
+                                        </form>
                                     </div>
+                                </div>
 
-                                    <div class="photo-album-item-wrap col-3-width">
-                                        <div class="photo-album-item" data-mh="album-item">
-                                            <div class="form-group">
-                                                <img src="img/photo-album7.jpg" alt="photo">
-                                                <textarea class="form-control" placeholder="Write something about this photo..."></textarea>
-                                            </div>
-                                            <form class="form-group label-floating is-select">
-                                                <svg class="olymp-happy-face-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
+                                <div class="photo-album-item-wrap col-3-width">
+                                    <div class="photo-album-item" data-mh="album-item">
+                                        <div class="form-group">
+                                            <img src="img/photo-album7.jpg" alt="photo">
+                                            <textarea class="form-control" placeholder="Write something about this photo..."></textarea>
+                                        </div>
+                                        <form class="form-group label-floating is-select">
+                                            <svg class="olymp-happy-face-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
 
-                                                <select class="selectpicker form-control style-2 show-tick" multiple data-max-options="2" data-live-search="true">
-                                                    <option title="Green Goo Rock" data-content='<div class="inline-items">
+                                            <select class="selectpicker form-control style-2 show-tick" multiple data-max-options="2" data-live-search="true">
+                                                <option title="Green Goo Rock" data-content='<div class="inline-items">
                                             <div class="author-thumb">
                                                 <img src="img/avatar52-sm.jpg" alt="author">
                                             </div>
@@ -1784,7 +1751,7 @@
                                             </div>'>Green Goo Rock
                                     </option>
 
-                                                    <option title="Mathilda Brinker" data-content='<div class="inline-items">
+                                                <option title="Mathilda Brinker" data-content='<div class="inline-items">
                                                 <div class="author-thumb">
                                                     <img src="img/avatar74-sm.jpg" alt="author">
                                                 </div>
@@ -1792,7 +1759,7 @@
                                             </div>'>Mathilda Brinker
                                     </option>
 
-                                                    <option title="Marina Valentine" data-content='<div class="inline-items">
+                                                <option title="Marina Valentine" data-content='<div class="inline-items">
                                                 <div class="author-thumb">
                                                     <img src="img/avatar48-sm.jpg" alt="author">
                                                 </div>
@@ -1800,7 +1767,7 @@
                                             </div>'>Marina Valentine
                                     </option>
 
-                                                    <option title="Dave Marinara" data-content='<div class="inline-items">
+                                                <option title="Dave Marinara" data-content='<div class="inline-items">
                                                 <div class="author-thumb">
                                                     <img src="img/avatar75-sm.jpg" alt="author">
                                                 </div>
@@ -1808,7 +1775,7 @@
                                             </div>'>Dave Marinara
                                     </option>
 
-                                                    <option title="Rachel Howlett" data-content='<div class="inline-items">
+                                                <option title="Rachel Howlett" data-content='<div class="inline-items">
                                                 <div class="author-thumb">
                                                     <img src="img/avatar76-sm.jpg" alt="author">
                                                 </div>
@@ -1816,23 +1783,23 @@
                                             </div>'>Rachel Howlett
                                     </option>
 
-                                                </select>
-                                            </form>
-                                        </div>
+                                            </select>
+                                        </form>
                                     </div>
+                                </div>
 
-                                    <div class="photo-album-item-wrap col-3-width">
-                                        <div class="photo-album-item" data-mh="album-item">
-                                            <div class="form-group">
-                                                <img src="img/photo-album8.jpg" alt="photo">
-                                                <textarea class="form-control" placeholder="Write something about this photo..."></textarea>
-                                            </div>
+                                <div class="photo-album-item-wrap col-3-width">
+                                    <div class="photo-album-item" data-mh="album-item">
+                                        <div class="form-group">
+                                            <img src="img/photo-album8.jpg" alt="photo">
+                                            <textarea class="form-control" placeholder="Write something about this photo..."></textarea>
+                                        </div>
 
-                                            <form class="form-group label-floating is-select">
-                                                <svg class="olymp-happy-face-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
+                                        <form class="form-group label-floating is-select">
+                                            <svg class="olymp-happy-face-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
 
-                                                <select class="selectpicker form-control style-2 show-tick" multiple data-max-options="2" data-live-search="true">
-                                                    <option title="Green Goo Rock" data-content='<div class="inline-items">
+                                            <select class="selectpicker form-control style-2 show-tick" multiple data-max-options="2" data-live-search="true">
+                                                <option title="Green Goo Rock" data-content='<div class="inline-items">
                                             <div class="author-thumb">
                                                 <img src="img/avatar52-sm.jpg" alt="author">
                                             </div>
@@ -1841,7 +1808,7 @@
                                             </div>'>Green Goo Rock
                                     </option>
 
-                                                    <option title="Mathilda Brinker" data-content='<div class="inline-items">
+                                                <option title="Mathilda Brinker" data-content='<div class="inline-items">
                                                 <div class="author-thumb">
                                                     <img src="img/avatar74-sm.jpg" alt="author">
                                                 </div>
@@ -1849,7 +1816,7 @@
                                             </div>'>Mathilda Brinker
                                     </option>
 
-                                                    <option title="Marina Valentine" data-content='<div class="inline-items">
+                                                <option title="Marina Valentine" data-content='<div class="inline-items">
                                                 <div class="author-thumb">
                                                     <img src="img/avatar48-sm.jpg" alt="author">
                                                 </div>
@@ -1857,7 +1824,7 @@
                                             </div>'>Marina Valentine
                                     </option>
 
-                                                    <option title="Dave Marinara" data-content='<div class="inline-items">
+                                                <option title="Dave Marinara" data-content='<div class="inline-items">
                                                 <div class="author-thumb">
                                                     <img src="img/avatar75-sm.jpg" alt="author">
                                                 </div>
@@ -1865,7 +1832,7 @@
                                             </div>'>Dave Marinara
                                     </option>
 
-                                                    <option title="Rachel Howlett" data-content='<div class="inline-items">
+                                                <option title="Rachel Howlett" data-content='<div class="inline-items">
                                                 <div class="author-thumb">
                                                     <img src="img/avatar76-sm.jpg" alt="author">
                                                 </div>
@@ -1873,23 +1840,23 @@
                                             </div>'>Rachel Howlett
                                     </option>
 
-                                                </select>
-                                            </form>
-                                        </div>
+                                            </select>
+                                        </form>
                                     </div>
+                                </div>
 
-                                    <div class="photo-album-item-wrap col-3-width">
-                                        <div class="photo-album-item" data-mh="album-item">
-                                            <div class="form-group">
-                                                <img src="img/photo-album9.jpg" alt="photo">
-                                                <textarea class="form-control" placeholder="Write something about this photo..."></textarea>
-                                            </div>
+                                <div class="photo-album-item-wrap col-3-width">
+                                    <div class="photo-album-item" data-mh="album-item">
+                                        <div class="form-group">
+                                            <img src="img/photo-album9.jpg" alt="photo">
+                                            <textarea class="form-control" placeholder="Write something about this photo..."></textarea>
+                                        </div>
 
-                                            <form class="form-group label-floating is-select">
-                                                <svg class="olymp-happy-face-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
+                                        <form class="form-group label-floating is-select">
+                                            <svg class="olymp-happy-face-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
 
-                                                <select class="selectpicker form-control style-2 show-tick" multiple data-max-options="2" data-live-search="true">
-                                                    <option title="Green Goo Rock" data-content='<div class="inline-items">
+                                            <select class="selectpicker form-control style-2 show-tick" multiple data-max-options="2" data-live-search="true">
+                                                <option title="Green Goo Rock" data-content='<div class="inline-items">
                                             <div class="author-thumb">
                                                 <img src="img/avatar52-sm.jpg" alt="author">
                                             </div>
@@ -1897,7 +1864,7 @@
                                             </div>'>Green Goo Rock
                                     </option>
 
-                                                    <option title="Mathilda Brinker" data-content='<div class="inline-items">
+                                                <option title="Mathilda Brinker" data-content='<div class="inline-items">
                                                 <div class="author-thumb">
                                                     <img src="img/avatar74-sm.jpg" alt="author">
                                                 </div>
@@ -1905,7 +1872,7 @@
                                             </div>'>Mathilda Brinker
                                     </option>
 
-                                                    <option title="Marina Valentine" data-content='<div class="inline-items">
+                                                <option title="Marina Valentine" data-content='<div class="inline-items">
                                                 <div class="author-thumb">
                                                     <img src="img/avatar48-sm.jpg" alt="author">
                                                 </div>
@@ -1913,7 +1880,7 @@
                                             </div>'>Marina Valentine
                                     </option>
 
-                                                    <option title="Dave Marinara" data-content='<div class="inline-items">
+                                                <option title="Dave Marinara" data-content='<div class="inline-items">
                                                 <div class="author-thumb">
                                                     <img src="img/avatar75-sm.jpg" alt="author">
                                                 </div>
@@ -1921,7 +1888,7 @@
                                             </div>'>Dave Marinara
                                     </option>
 
-                                                    <option title="Rachel Howlett" data-content='<div class="inline-items">
+                                                <option title="Rachel Howlett" data-content='<div class="inline-items">
                                                 <div class="author-thumb">
                                                     <img src="img/avatar76-sm.jpg" alt="author">
                                                 </div>
@@ -1929,23 +1896,23 @@
                                             </div>'>Rachel Howlett
                                     </option>
 
-                                                </select>
-                                            </form>
-                                        </div>
+                                            </select>
+                                        </form>
                                     </div>
+                                </div>
 
-                                    <div class="photo-album-item-wrap col-3-width">
-                                        <div class="photo-album-item" data-mh="album-item">
-                                            <div class="form-group">
-                                                <img src="img/photo-album10.jpg" alt="photo">
-                                                <textarea class="form-control" placeholder="Write something about this photo..."></textarea>
-                                            </div>
+                                <div class="photo-album-item-wrap col-3-width">
+                                    <div class="photo-album-item" data-mh="album-item">
+                                        <div class="form-group">
+                                            <img src="img/photo-album10.jpg" alt="photo">
+                                            <textarea class="form-control" placeholder="Write something about this photo..."></textarea>
+                                        </div>
 
-                                            <form class="form-group label-floating is-select">
-                                                <svg class="olymp-happy-face-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
+                                        <form class="form-group label-floating is-select">
+                                            <svg class="olymp-happy-face-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-happy-face-icon"></use></svg>
 
-                                                <select class="selectpicker form-control style-2 show-tick" multiple data-max-options="2" data-live-search="true">
-                                                    <option title="Green Goo Rock" data-content='<div class="inline-items">
+                                            <select class="selectpicker form-control style-2 show-tick" multiple data-max-options="2" data-live-search="true">
+                                                <option title="Green Goo Rock" data-content='<div class="inline-items">
                                             <div class="author-thumb">
                                                 <img src="img/avatar52-sm.jpg" alt="author">
                                             </div>
@@ -1954,7 +1921,7 @@
                                             </div>'>Green Goo Rock
                                     </option>
 
-                                                    <option title="Mathilda Brinker" data-content='<div class="inline-items">
+                                                <option title="Mathilda Brinker" data-content='<div class="inline-items">
                                                 <div class="author-thumb">
                                                     <img src="img/avatar74-sm.jpg" alt="author">
                                                 </div>
@@ -1962,7 +1929,7 @@
                                             </div>'>Mathilda Brinker
                                     </option>
 
-                                                    <option title="Marina Valentine" data-content='<div class="inline-items">
+                                                <option title="Marina Valentine" data-content='<div class="inline-items">
                                                 <div class="author-thumb">
                                                     <img src="img/avatar48-sm.jpg" alt="author">
                                                 </div>
@@ -1970,7 +1937,7 @@
                                             </div>'>Marina Valentine
                                     </option>
 
-                                                    <option title="Dave Marinara" data-content='<div class="inline-items">
+                                                <option title="Dave Marinara" data-content='<div class="inline-items">
                                                 <div class="author-thumb">
                                                     <img src="img/avatar75-sm.jpg" alt="author">
                                                 </div>
@@ -1978,7 +1945,7 @@
                                             </div>'>Dave Marinara
                                     </option>
 
-                                                    <option title="Rachel Howlett" data-content='<div class="inline-items">
+                                                <option title="Rachel Howlett" data-content='<div class="inline-items">
                                                 <div class="author-thumb">
                                                     <img src="img/avatar76-sm.jpg" alt="author">
                                                 </div>
@@ -1986,11 +1953,11 @@
                                             </div>'>Rachel Howlett
                                     </option>
 
-                                                </select>
-                                            </form>
+                                            </select>
+                                        </form>
 
-                                        </div>
                                     </div>
+                                </div>
                             </div>
 
                             <a href="#" class="btn btn-secondary btn-lg btn--half-width">Discard Everything</a>
@@ -2447,4 +2414,4 @@
         </div>
     </div>
 </div>
-</div>
+

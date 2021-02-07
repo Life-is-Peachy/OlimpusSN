@@ -1,5 +1,7 @@
 ﻿@{ 
-    Layout = null; }
+    Layout = null;
+}
+
 @model User
 
 <!DOCTYPE html>
@@ -317,7 +319,7 @@
                                 </div>
                             </form>
                         </div>
-
+                        
                         <div class="tab-pane" id="profile" role="tabpanel" data-mh="log-tab">
                             <div class="title h6">Login to your Account</div>
                             <form class="content" asp-action="SignIn" method="post">
@@ -333,7 +335,6 @@
                                         </div>
 
                                         <div class="remember">
-
                                             <div class="checkbox">
                                                 <label>
                                                     <input name="optionsCheckboxes" type="checkbox">
@@ -364,6 +365,7 @@
             </div>
         </div>
     </div>
+    
 
 
     <!-- JS Scripts -->
@@ -405,6 +407,46 @@
     <script defer src="fonts/fontawesome-all.js"></script>
 
     <script src="Bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="Bootstrap/js/src/util.js"></script>
 
+
+
+    <script>
+        //$(document).ready(function ()
+        //{
+        //    //var $class = 'col col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12';
+        //    $('.col col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 input', '#SignInForm').on('keyup', function ()
+        //    {
+        //        let empty = false;
+
+        //        $('.col col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 input').each(function ()
+        //        {
+        //            empty = $(this).val().length == 0;
+        //        });
+
+        //        if (empty)
+        //            $('.col col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 input', '#SignInSubmit').attr('disabled', true);
+        //        else
+        //            $('.col col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 input', '#SignInSubmit').attr('disabled', false);
+        //    });
+        //});
+
+        //$(document).ready(function ()
+        //{
+        //    let $emailInput = $('input#SignInEmail');
+        //    let $passwordInput = $('input#SignInPassword');
+        //    let $submitButton = $('input#SignInSubmit');
+
+        //    $submitButton.prop('disabled', true);
+
+        //    $submitButton.on('mouseenter', function ()
+        //    {
+        //        if ($emailInput.val().length > 5 && $passwordInput.val().length > 5)
+        //        {
+        //            $submitButton.prop('disabled', false);
+        //        }
+        //    });
+        //});
+        </script>
 </body>
 </html>

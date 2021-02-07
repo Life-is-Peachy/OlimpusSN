@@ -19,8 +19,9 @@ namespace OlimpusSN.Controllers
 
 
         public IActionResult Profile()
-            => View(_postRepository.GetPost(this.GetId()));
-
+        {
+            return View(_postRepository.GetPost(this.GetId()));
+        }
 
         public IActionResult About()
             => View(_allRepository.GetPersonAll(this.GetId()));

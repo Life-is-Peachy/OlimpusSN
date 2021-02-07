@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Photografy>
+
+<div class="ui-block">
+    <div class="ui-block-title">
+        <h6 class="title">Last Photos</h6>
+    </div>
+    <div class="ui-block-content">
+
+        <!-- W-Latest-Photo -->
+
+        <ul class="widget w-last-photo js-zoom-gallery">
+
+            @foreach (var item in Model)
+            {
+                <partial name="PartialViews/PhotoCollection" model="item" />
+            }
+
+        </ul>
+
+
+        <!-- .. end W-Latest-Photo -->
+    </div>
+</div>

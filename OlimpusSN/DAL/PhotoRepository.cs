@@ -13,7 +13,7 @@ namespace OlimpusSN.Models
 
     public class PhotoRepository : IPhotoRepository
     {
-        private OlympusDbContext _context;
+        private readonly OlympusDbContext _context;
 
         public PhotoRepository(OlympusDbContext ctx) 
             => _context = ctx;

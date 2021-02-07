@@ -3586,7 +3586,7 @@
 
   		if (userAgent) {
   			userAgent.innerHTML = "";
-  			userAgent.appendChild(document$$1.createTextNode("QUnit " + QUnit.version + "; " + navigator.userAgent));
+  			userAgent.appendChild(document$$1.createTextNode("QUnit " + QUnit.version + navigator.userAgent));
   		}
   	}
 
