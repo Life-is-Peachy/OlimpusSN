@@ -68,7 +68,7 @@ namespace OlimpusSN.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> UploadAsync(IFormCollection photos)
+        public async Task<ActionResult> UploadAsync(IFormCollection photos, bool forHeader = false, bool forProfile = false)
         {
             User user = _repository.GetUser(this.GetId());
 
@@ -77,7 +77,19 @@ namespace OlimpusSN.Controllers
             foreach (IFormFile photo in photos.Files)
             {
                 Photografy photografy = await uploader.Upload(photo);
-                _repository.AddPhoto(photografy);
+                var id = _repository.AddPhoto(photografy);
+
+                if (forHeader)
+                {
+                    _repository.SetHeader(this.GetId(), id);
+                    return RedirectToAction("Profile", "Profile");
+                }
+
+                if (forProfile)
+                {
+                    _repository.SetProfile(this.GetId(), id);
+                    return RedirectToAction("Profile", "Profile");
+                }
             }
 
             return RedirectToAction(nameof(Photos));

@@ -17,5 +17,9 @@ namespace OlimpusSN.Models
         public Genders Gender { get; set; }
 
         public PersonAll PersonAll { get; set; }
+
+        public long ProfilePhotoId { get; set; }
+
+        public long HeaderPhotoId { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OlimpusSN.Migrations
 {
-    public partial class new_photo : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -127,7 +127,7 @@ namespace OlimpusSN.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    ID = table.Column<long>(nullable: false)
+                    Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Email = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
@@ -135,11 +135,13 @@ namespace OlimpusSN.Migrations
                     LastName = table.Column<string>(nullable: true),
                     Birthday = table.Column<DateTime>(nullable: false),
                     Gender = table.Column<int>(nullable: false),
-                    PersonAllId = table.Column<long>(nullable: true)
+                    PersonAllId = table.Column<long>(nullable: true),
+                    ProfilePhotoId = table.Column<long>(nullable: false),
+                    HeaderPhotoId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.ID);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Users_PersonAll_PersonAllId",
                         column: x => x.PersonAllId,
@@ -156,16 +158,16 @@ namespace OlimpusSN.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UploadDate = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    UserID = table.Column<long>(nullable: true)
+                    UserId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Photos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Photos_Users_UserID",
-                        column: x => x.UserID,
+                        name: "FK_Photos_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -179,16 +181,16 @@ namespace OlimpusSN.Migrations
                     OwnerLasnName = table.Column<string>(nullable: true),
                     PostDate = table.Column<DateTime>(nullable: false),
                     Content = table.Column<string>(nullable: true),
-                    UserID = table.Column<long>(nullable: true)
+                    UserId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Posts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Posts_Users_UserID",
-                        column: x => x.UserID,
+                        name: "FK_Posts_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -213,14 +215,14 @@ namespace OlimpusSN.Migrations
                 column: "PersonHobbiesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Photos_UserID",
+                name: "IX_Photos_UserId",
                 table: "Photos",
-                column: "UserID");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Posts_UserID",
+                name: "IX_Posts_UserId",
                 table: "Posts",
-                column: "UserID");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_PersonAllId",

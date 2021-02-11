@@ -10,8 +10,8 @@ using OlimpusSN.Models;
 namespace OlimpusSN.Migrations
 {
     [DbContext(typeof(OlympusDbContext))]
-    [Migration("20201111094919_new_photo")]
-    partial class new_photo
+    [Migration("20210211085456_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -198,12 +198,12 @@ namespace OlimpusSN.Migrations
                     b.Property<DateTime>("UploadDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("UserID")
+                    b.Property<long?>("UserId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Photos");
                 });
@@ -227,19 +227,19 @@ namespace OlimpusSN.Migrations
                     b.Property<DateTime>("PostDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("UserID")
+                    b.Property<long?>("UserId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("OlimpusSN.Models.User", b =>
                 {
-                    b.Property<long>("ID")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -256,6 +256,9 @@ namespace OlimpusSN.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
+                    b.Property<long>("HeaderPhotoId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
@@ -265,7 +268,10 @@ namespace OlimpusSN.Migrations
                     b.Property<long?>("PersonAllId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("ID");
+                    b.Property<long>("ProfilePhotoId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("PersonAllId");
 
@@ -295,14 +301,14 @@ namespace OlimpusSN.Migrations
                 {
                     b.HasOne("OlimpusSN.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserID");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("OlimpusSN.Models.Post", b =>
                 {
                     b.HasOne("OlimpusSN.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserID");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("OlimpusSN.Models.User", b =>

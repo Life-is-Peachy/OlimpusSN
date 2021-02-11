@@ -1,4 +1,6 @@
-﻿<!-- ... end Responsive Header-BP -->
+﻿@model Header
+
+<!-- ... end Responsive Header-BP -->
 <div class="header-spacer"></div>
 
 <!-- Top Header-Profile -->
@@ -9,7 +11,7 @@
             <div class="ui-block">
                 <div class="top-header">
                     <div class="top-header-thumb">
-                        <img src="~/img/top-header1.jpg" alt="nature">
+                        <img src="@(Model.Thumb == null ? "/img/top-header1.jpg" : Model.Thumb)" alt="nature">
                     </div>
                     <div class="profile-section">
                         <div class="row">
@@ -68,7 +70,7 @@
                                         <a href="#" data-toggle="modal" data-target="#update-header-photo">Update Profile Photo</a>
                                     </li>
                                     <li>
-                                        <a href="#" data-toggle="modal" data-target="#update-header-photo">Update Header Photo</a>
+                                        <a href="#" data-toggle="modal" data-target="#update-profile-photo">Update Profile Photo</a>
                                     </li>
                                     <li>
                                         <a href="29-YourAccount-AccountSettings.html">Account Settings</a>
@@ -79,7 +81,7 @@
                     </div>
                     <div class="top-header-author">
                         <a href="02-ProfilePage.html" class="author-thumb">
-                            <img src="~/img/author-main1.jpg" alt="author">
+                            <img src="@(Model.Avatar == null ? "/img/author-main1.jpg" : Model.Avatar)" alt="author">
                         </a>
                         <div class="author-content">
                             <a href="02-ProfilePage.html" class="h4 author-name">James Spiegel</a>
@@ -108,13 +110,49 @@
                     <div class="modal-header">
                         <h6 class="title">Update Header Photo</h6>
                     </div>
-                    <form asp-action="Upload" asp-controller="Content" method="post" enctype="multipart/form-data">
+                    <form asp-route-forHeader="@true" asp-action="Upload" asp-controller="Content" method="post" enctype="multipart/form-data">
                         <div class="modal-body">
                             <a class="upload-photo-item">
                                 <svg class="olymp-computer-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-computer-icon"></use></svg>
                                 <h6>Upload Photo</h6>
                                 <span>Browse your computer.</span>
-                                <input type="file" name="file" multiple/>
+                                <input type="file" name="file">
+                                <input type="submit">
+                            </a>
+                        </div>
+                    </form>
+                    <a href="#" class="upload-photo-item" data-toggle="modal" data-target="#choose-from-my-photo">
+
+                        <svg class="olymp-photos-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-photos-icon"></use></svg>
+
+                        <h6>Choose from My Photos</h6>
+                        <span>Choose from your uploaded photos</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ... end Window-popup Update Header Photo -->
+        <!-- Window-popup Update Header Photo -->
+
+        <div class="modal fade" id="update-profile-photo" tabindex="-1" role="dialog" aria-labelledby="update-profile-photo" aria-hidden="true">
+            <div class="modal-dialog window-popup update-header-photo" role="document">
+                <div class="modal-content">
+                    <a href="#" class="close icon-close" data-dismiss="modal" aria-label="Close">
+                        <svg class="olymp-close-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-close-icon"></use></svg>
+                    </a>
+
+                    <div class="modal-header">
+                        <h6 class="title">Update Profile Photo</h6>
+                    </div>
+                    <form asp-route-forProfile="@true" asp-action="Upload" asp-controller="Content" method="post" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <a class="upload-photo-item">
+                                <svg class="olymp-computer-icon"><use xlink:href="svg-icons/sprites/icons.svg#olymp-computer-icon"></use></svg>
+                                <h6>Upload Photo</h6>
+                                <span>Browse your computer.</span>
+                                <input type="file" name="file">
                                 <input type="submit">
                             </a>
                         </div>

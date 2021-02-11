@@ -24,34 +24,30 @@ namespace OlimpusSN.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(User user)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                ModelState.AddModelError("", "Некорректный логин или пароль");
+
+            bool IsAlreadyExists = _accountManager.UserExists(user.Email);
+
+            if (IsAlreadyExists)
+                return View(nameof(SignIn), user);
+
+
+            User newUser = new User
             {
-                bool IsAlreadyExists = _accountManager.UserExists(user.Email);
+                Email = user.Email,
+                Password = user.Password,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Birthday = user.Birthday,
+                Gender = user.Gender,
+                PersonAll = SeedData.SeedOnRegister(user.FirstName, user.LastName, user.Email, user.Birthday, user.Gender)
+            };
 
-                if (!IsAlreadyExists)
-                {
-                    User newUser = new User
-                    {
-                        Email = user.Email,
-                        Password = user.Password,
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        Birthday = user.Birthday,
-                        Gender = user.Gender,
-                        PersonAll = SeedData.SeedOnRegister(user.FirstName, user.LastName, user.Email, user.Birthday, user.Gender)
-                    };
+            long id = _accountManager.Register(newUser);
+            await Authenticate(id);
 
-                    long id = _accountManager.Register(newUser);
-                    await Authenticate(id);
-
-                    return RedirectToAction("Profile", "Profile");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Некорректный логин или пароль");
-                }
-            }
-            return View(nameof(SignIn), user);
+            return RedirectToAction("Profile", "Profile");
         }
 
 

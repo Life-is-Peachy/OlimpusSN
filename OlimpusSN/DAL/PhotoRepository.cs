@@ -6,9 +6,11 @@ namespace OlimpusSN.Models
     public interface IPhotoRepository
     {
         User GetUser(long id);
-        void AddPhoto(Photografy photo);
+        long AddPhoto(Photografy photo);
         IEnumerable<Photografy> GetPhotografy(long id);
         void DeletePhoto(long id);
+        void SetHeader(long userID, long photoID);
+        void SetProfile(long userID, long photoID);
     }
 
     public class PhotoRepository : IPhotoRepository
@@ -19,9 +21,23 @@ namespace OlimpusSN.Models
             => _context = ctx;
 
 
-        public void AddPhoto(Photografy photo)
+        public long AddPhoto(Photografy photo)
         {
             _context.Photos.Add(photo);
+            _context.SaveChanges();
+
+            return photo.Id;
+        }
+
+        public void SetHeader(long userID, long photoID)
+        {
+            _context.Users.First(x => x.Id == userID).HeaderPhotoId = photoID;
+            _context.SaveChanges();
+        }
+
+        public void SetProfile(long userID, long photoID)
+        {
+            _context.Users.First(x => x.Id == userID).ProfilePhotoId = photoID;
             _context.SaveChanges();
         }
 

@@ -6,7 +6,7 @@ namespace OlimpusSN.Components
 {
     public class LastPhotosComponent : ViewComponent
     {
-        private IPhotoRepository _repository;
+        private readonly IPhotoRepository _repository;
 
         public LastPhotosComponent(IPhotoRepository repo) => _repository = repo;
 
